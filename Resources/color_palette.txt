@@ -1,0 +1,4 @@
+Mirage: #111524
+Sushi: #8CC63F
+Chateau Green: #39B54A
+White: #FFFFFF
