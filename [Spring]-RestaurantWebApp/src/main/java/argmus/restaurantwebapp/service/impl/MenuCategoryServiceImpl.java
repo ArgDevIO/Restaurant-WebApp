@@ -5,6 +5,8 @@ import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.service.MenuCategoryService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MenuCategoryServiceImpl implements MenuCategoryService {
 
@@ -17,5 +19,10 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     @Override
     public MenuCategory createMenuCategory(String name, String icon) {
         return this.categoryRepository.save(new MenuCategory(name, icon));
+    }
+
+    @Override
+    public List<MenuCategory> getAllMenuCategories() {
+        return this.categoryRepository.findAll();
     }
 }
