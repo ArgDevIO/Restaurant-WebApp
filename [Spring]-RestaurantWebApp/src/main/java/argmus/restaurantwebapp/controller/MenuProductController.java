@@ -47,5 +47,15 @@ public class MenuProductController {
     }
 
     //TODO PUT(/menu/product/{id}): update menu product by id
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public MenuProduct update(@PathVariable int id,
+                              @RequestParam String name,
+                              @RequestParam String description,
+                              @RequestParam int price,
+                              @RequestParam int categoryId) {
+        return this.productService.updateMenuProduct(id, name, description, price, categoryId);
+    }
+
 
 }

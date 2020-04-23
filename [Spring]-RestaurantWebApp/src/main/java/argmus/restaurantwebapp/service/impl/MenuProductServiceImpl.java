@@ -43,4 +43,17 @@ public class MenuProductServiceImpl implements MenuProductService {
     public void deleteMenuProduct(int id) {
         this.productRepository.deleteById(id);
     }
+
+    @Override
+    public MenuProduct updateMenuProduct(int id, String name, String description, int price, int categoryId) {
+        MenuProduct product = this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
+        MenuCategory category = this.categoryRepository.findById(categoryId).orElseThrow(MenuCategoryDoesntExistException::new);
+
+        if (!name.isBlank()) product.setName(name);
+        if (!description.isBlank()) product.setDescription(description);
+        if (product.getPrice() != price) product.setPrice(price);
+        if (product.getCategory() != category) product.setCategory(category);
+
+        return this.productRepository.save(product);
+    }
 }

@@ -36,4 +36,14 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     public void deleteMenuCategory(int id) {
         this.categoryRepository.deleteById(id);
     }
+
+    @Override
+    public MenuCategory updateMenuCategory(int id, String name, String icon) {
+        MenuCategory category = this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
+
+        if (!name.isBlank()) category.setName(name);
+        if (!icon.isBlank()) category.setIcon(icon);
+
+        return this.categoryRepository.save(category);
+    }
 }

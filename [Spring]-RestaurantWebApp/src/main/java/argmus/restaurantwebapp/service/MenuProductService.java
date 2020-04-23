@@ -13,4 +13,6 @@ public interface MenuProductService {
     MenuProduct getMenuProduct(int id);
 
     void deleteMenuProduct(int id);
+
+    MenuProduct updateMenuProduct(int id, String name, String description, int price, int categoryId);
 }

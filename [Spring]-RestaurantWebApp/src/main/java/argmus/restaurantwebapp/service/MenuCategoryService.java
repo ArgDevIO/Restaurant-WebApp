@@ -13,4 +13,6 @@ public interface MenuCategoryService {
     MenuCategory getMenuCategory(int id);
 
     void deleteMenuCategory(int id);
+
+    MenuCategory updateMenuCategory(int id, String name, String icon);
 }
