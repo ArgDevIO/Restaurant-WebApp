@@ -1,14 +1,30 @@
 package argmus.restaurantwebapp.controller;
 
+import argmus.restaurantwebapp.model.MenuProduct;
+import argmus.restaurantwebapp.service.MenuProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/menu/product", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class MenuProductController {
 
+    private final MenuProductService productService;
+
+    public MenuProductController(MenuProductService productService) {
+        this.productService = productService;
+    }
+
     //TODO POST(/menu/product): create new menu product
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public MenuProduct create(@RequestParam String name,
+                              @RequestParam String description,
+                              @RequestParam int price,
+                              @RequestParam int categoryId) {
+        return this.productService.createMenuProduct(name, description, price, categoryId);
+    }
 
     //TODO GET(/menu/product): get all menu products
 
