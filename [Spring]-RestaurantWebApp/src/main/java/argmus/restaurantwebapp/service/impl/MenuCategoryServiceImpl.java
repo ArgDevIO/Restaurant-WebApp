@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.service.impl;
 
 import argmus.restaurantwebapp.model.MenuCategory;
+import argmus.restaurantwebapp.model.exceptions.MenuCategoryDoesntExistException;
 import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.service.MenuCategoryService;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,10 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     @Override
     public List<MenuCategory> getAllMenuCategories() {
         return this.categoryRepository.findAll();
+    }
+
+    @Override
+    public MenuCategory getMenuCategory(int id) {
+        return this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
     }
 }

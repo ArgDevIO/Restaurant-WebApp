@@ -9,4 +9,6 @@ public interface MenuCategoryService {
     MenuCategory createMenuCategory(String name, String icon);
 
     List<MenuCategory> getAllMenuCategories();
+
+    MenuCategory getMenuCategory(int id);
 }

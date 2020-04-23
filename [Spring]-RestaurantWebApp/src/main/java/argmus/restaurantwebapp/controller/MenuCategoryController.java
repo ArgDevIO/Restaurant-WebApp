@@ -35,6 +35,10 @@ public class MenuCategoryController {
     //TODO GET(/menu/category/{id}/products): get all products by category id
 
     //TODO GET(/menu/category/{id}): get menu category by id
+    @GetMapping("/{id}")
+    public MenuCategory get(@PathVariable int id) {
+        return this.categoryService.getMenuCategory(id);
+    }
 
     //TODO DELETE(/menu/category/{id}): delete menu category by id
 
