@@ -1,14 +1,28 @@
 package argmus.restaurantwebapp.controller;
 
+import argmus.restaurantwebapp.model.MenuCategory;
+import argmus.restaurantwebapp.service.MenuCategoryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/menu/category", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class MenuCategoryController {
 
+    private final MenuCategoryService categoryService;
+
+    public MenuCategoryController(MenuCategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     //TODO POST(/menu/category): create new menu category
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public MenuCategory create(@RequestParam String name,
+                               @RequestParam String icon) {
+        return this.categoryService.createMenuCategory(name, icon);
+    }
 
     //TODO GET(/menu/category): get all menu categories
 
