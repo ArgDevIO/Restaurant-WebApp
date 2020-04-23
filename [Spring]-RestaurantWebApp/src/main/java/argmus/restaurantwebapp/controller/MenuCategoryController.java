@@ -41,6 +41,10 @@ public class MenuCategoryController {
     }
 
     //TODO DELETE(/menu/category/{id}): delete menu category by id
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        this.categoryService.deleteMenuCategory(id);
+    }
 
     //TODO PUT(/menu/category/{id}): update menu category by id
 

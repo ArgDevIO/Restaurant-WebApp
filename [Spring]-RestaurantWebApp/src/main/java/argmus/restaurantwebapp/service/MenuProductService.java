@@ -5,9 +5,12 @@ import argmus.restaurantwebapp.model.MenuProduct;
 import java.util.List;
 
 public interface MenuProductService {
+
     MenuProduct createMenuProduct(String name, String description, int price, int categoryId);
 
     List<MenuProduct> getAllMenuProducts();
 
-    MenuProduct getProduct(int id);
+    MenuProduct getMenuProduct(int id);
+
+    void deleteMenuProduct(int id);
 }

@@ -31,4 +31,9 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     public MenuCategory getMenuCategory(int id) {
         return this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
     }
+
+    @Override
+    public void deleteMenuCategory(int id) {
+        this.categoryRepository.deleteById(id);
+    }
 }

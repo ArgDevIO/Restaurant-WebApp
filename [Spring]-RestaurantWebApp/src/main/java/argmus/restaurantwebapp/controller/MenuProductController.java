@@ -37,10 +37,14 @@ public class MenuProductController {
     //TODO GET(/menu/product/{id}): get menu product by id
     @GetMapping("/{id}")
     public MenuProduct get(@PathVariable int id){
-        return this.productService.getProduct(id);
+        return this.productService.getMenuProduct(id);
     }
 
     //TODO DELETE(/menu/product/{id}): delete menu product by id
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id){
+        this.productService.deleteMenuProduct(id);
+    }
 
     //TODO PUT(/menu/product/{id}): update menu product by id
 

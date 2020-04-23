@@ -11,4 +11,6 @@ public interface MenuCategoryService {
     List<MenuCategory> getAllMenuCategories();
 
     MenuCategory getMenuCategory(int id);
+
+    void deleteMenuCategory(int id);
 }

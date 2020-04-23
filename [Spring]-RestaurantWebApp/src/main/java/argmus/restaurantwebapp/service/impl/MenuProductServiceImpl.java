@@ -35,7 +35,12 @@ public class MenuProductServiceImpl implements MenuProductService {
     }
 
     @Override
-    public MenuProduct getProduct(int id) {
+    public MenuProduct getMenuProduct(int id) {
         return this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
+    }
+
+    @Override
+    public void deleteMenuProduct(int id) {
+        this.productRepository.deleteById(id);
     }
 }
