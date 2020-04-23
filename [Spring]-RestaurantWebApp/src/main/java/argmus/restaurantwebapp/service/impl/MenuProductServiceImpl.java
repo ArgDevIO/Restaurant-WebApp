@@ -3,6 +3,7 @@ package argmus.restaurantwebapp.service.impl;
 import argmus.restaurantwebapp.model.MenuCategory;
 import argmus.restaurantwebapp.model.MenuProduct;
 import argmus.restaurantwebapp.model.exceptions.MenuCategoryDoesntExistException;
+import argmus.restaurantwebapp.model.exceptions.MenuProductDoesntExistException;
 import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.repository.MenuProductRepository;
 import argmus.restaurantwebapp.service.MenuProductService;
@@ -31,5 +32,10 @@ public class MenuProductServiceImpl implements MenuProductService {
     @Override
     public List<MenuProduct> getAllMenuProducts() {
         return this.productRepository.findAll();
+    }
+
+    @Override
+    public MenuProduct getProduct(int id) {
+        return this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
     }
 }

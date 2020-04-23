@@ -8,4 +8,6 @@ public interface MenuProductService {
     MenuProduct createMenuProduct(String name, String description, int price, int categoryId);
 
     List<MenuProduct> getAllMenuProducts();
+
+    MenuProduct getProduct(int id);
 }
