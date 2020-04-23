@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/menu/product", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class MenuProductController {
@@ -27,6 +29,10 @@ public class MenuProductController {
     }
 
     //TODO GET(/menu/product): get all menu products
+    @GetMapping
+    public List<MenuProduct> getAll(){
+        return this.productService.getAllMenuProducts();
+    }
 
     //TODO GET(/menu/product/{id}): get menu product by id
 

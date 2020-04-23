@@ -8,6 +8,8 @@ import argmus.restaurantwebapp.repository.MenuProductRepository;
 import argmus.restaurantwebapp.service.MenuProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MenuProductServiceImpl implements MenuProductService {
 
@@ -24,5 +26,10 @@ public class MenuProductServiceImpl implements MenuProductService {
         MenuCategory category = this.categoryRepository.findById(categoryId).orElseThrow(MenuCategoryDoesntExistException::new);
 
         return this.productRepository.save(new MenuProduct(name, description, price, category));
+    }
+
+    @Override
+    public List<MenuProduct> getAllMenuProducts() {
+        return this.productRepository.findAll();
     }
 }
