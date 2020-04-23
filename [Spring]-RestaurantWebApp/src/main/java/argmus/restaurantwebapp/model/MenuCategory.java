@@ -35,4 +35,26 @@ public class MenuCategory {
         this.icon = icon;
         this.products = new HashSet<>();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MenuCategory)) return false;
+
+        MenuCategory category = (MenuCategory) o;
+
+        if (!id.equals(category.id)) return false;
+        if (!name.equals(category.name)) return false;
+        if (!icon.equals(category.icon)) return false;
+        return products.equals(category.products);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + icon.hashCode();
+        result = 31 * result + products.hashCode();
+        return result;
+    }
 }

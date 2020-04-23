@@ -30,4 +30,28 @@ public class MenuProduct {
         this.price = price;
         this.category = category;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MenuProduct)) return false;
+
+        MenuProduct product = (MenuProduct) o;
+
+        if (price != product.price) return false;
+        if (!id.equals(product.id)) return false;
+        if (!name.equals(product.name)) return false;
+        if (!description.equals(product.description)) return false;
+        return category.equals(product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + price;
+        result = 31 * result + category.hashCode();
+        return result;
+    }
 }
