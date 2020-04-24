@@ -2,6 +2,7 @@ package argmus.restaurantwebapp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 @Data
 @Entity
 @Table(name = "Menu_Categories")
@@ -43,18 +45,16 @@ public class MenuCategory {
 
         MenuCategory category = (MenuCategory) o;
 
-        if (!id.equals(category.id)) return false;
-        if (!name.equals(category.name)) return false;
-        if (!icon.equals(category.icon)) return false;
-        return products.equals(category.products);
+        if (getId() != null ? !getId().equals(category.getId()) : category.getId() != null) return false;
+        if (getName() != null ? !getName().equals(category.getName()) : category.getName() != null) return false;
+        return getIcon() != null ? getIcon().equals(category.getIcon()) : category.getIcon() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + icon.hashCode();
-        result = 31 * result + products.hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getIcon() != null ? getIcon().hashCode() : 0);
         return result;
     }
 }
