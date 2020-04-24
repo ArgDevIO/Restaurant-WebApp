@@ -47,13 +47,18 @@ public class MenuProductServiceImpl implements MenuProductService {
     @Override
     public MenuProduct updateMenuProduct(int id, String name, String description, int price, boolean active, int categoryId) {
         MenuProduct product = this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
+        MenuProduct newProduct = product.toBuilder().build();
+        
         MenuCategory category = this.categoryRepository.findById(categoryId).orElseThrow(MenuCategoryDoesntExistException::new);
 
-        if (!name.isBlank()) product.setName(name);
-        if (!description.isBlank()) product.setDescription(description);
-        if (product.getPrice() != price) product.setPrice(price);
-        if (product.getCategory() != category) product.setCategory(category);
+        newProduct.setName(name);
+        newProduct.setDescription(description);
+        newProduct.setPrice(price);
+        newProduct.setActive(active);
+        newProduct.setCategory(category);
 
-        return this.productRepository.save(product);
+        if (!newProduct.equals(product))
+            return this.productRepository.save(newProduct);
+        return product;
     }
 }

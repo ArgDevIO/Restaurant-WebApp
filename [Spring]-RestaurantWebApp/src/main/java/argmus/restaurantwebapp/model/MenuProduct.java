@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 @Data
 @Entity
 @Table(name = "Menu_Products")
