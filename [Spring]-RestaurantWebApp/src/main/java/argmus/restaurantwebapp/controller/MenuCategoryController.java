@@ -22,8 +22,9 @@ public class MenuCategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MenuCategory create(@RequestParam String name,
-                               @RequestParam String icon) {
-        return this.categoryService.createMenuCategory(name, icon);
+                               @RequestParam String icon,
+                               @RequestParam(defaultValue = "true") boolean active) {
+        return this.categoryService.createMenuCategory(name, icon, active);
     }
 
     //TODO GET(/menu/category): get all menu categories
@@ -54,8 +55,9 @@ public class MenuCategoryController {
     @ResponseStatus(HttpStatus.OK)
     public MenuCategory update(@PathVariable int id,
                                @RequestParam String name,
-                               @RequestParam String icon) {
-        return this.categoryService.updateMenuCategory(id, name, icon);
+                               @RequestParam String icon,
+                               @RequestParam(defaultValue = "true") boolean active) {
+        return this.categoryService.updateMenuCategory(id, name, icon, active);
     }
 
 }

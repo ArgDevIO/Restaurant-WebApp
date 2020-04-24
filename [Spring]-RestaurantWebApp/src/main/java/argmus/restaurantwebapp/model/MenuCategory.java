@@ -23,6 +23,7 @@ public class MenuCategory {
     private Integer id;
     private String name;
     private String icon;
+    private boolean active;
 
     @JsonIgnore
     @OneToMany(
@@ -32,9 +33,10 @@ public class MenuCategory {
     )
     private Set<MenuProduct> products;
 
-    public MenuCategory(String name, String icon) {
+    public MenuCategory(String name, String icon, boolean active) {
         this.name = name;
         this.icon = icon;
+        this.active = active;
         this.products = new HashSet<>();
     }
 
@@ -45,16 +47,18 @@ public class MenuCategory {
 
         MenuCategory category = (MenuCategory) o;
 
-        if (getId() != null ? !getId().equals(category.getId()) : category.getId() != null) return false;
-        if (getName() != null ? !getName().equals(category.getName()) : category.getName() != null) return false;
+        if (isActive() != category.isActive()) return false;
+        if (!getId().equals(category.getId())) return false;
+        if (!getName().equals(category.getName())) return false;
         return getIcon() != null ? getIcon().equals(category.getIcon()) : category.getIcon() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        int result = getId().hashCode();
+        result = 31 * result + getName().hashCode();
         result = 31 * result + (getIcon() != null ? getIcon().hashCode() : 0);
+        result = 31 * result + (isActive() ? 1 : 0);
         return result;
     }
 }

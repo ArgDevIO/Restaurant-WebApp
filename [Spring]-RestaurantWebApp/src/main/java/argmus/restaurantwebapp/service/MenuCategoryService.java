@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MenuCategoryService {
 
-    MenuCategory createMenuCategory(String name, String icon);
+    MenuCategory createMenuCategory(String name, String icon, boolean active);
 
     List<MenuCategory> getAllMenuCategories();
 
@@ -14,5 +14,5 @@ public interface MenuCategoryService {
 
     void deleteMenuCategory(int id);
 
-    MenuCategory updateMenuCategory(int id, String name, String icon);
+    MenuCategory updateMenuCategory(int id, String name, String icon, boolean active);
 }

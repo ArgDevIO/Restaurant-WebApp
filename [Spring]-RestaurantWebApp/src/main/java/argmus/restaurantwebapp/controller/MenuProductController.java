@@ -24,8 +24,9 @@ public class MenuProductController {
     public MenuProduct create(@RequestParam String name,
                               @RequestParam String description,
                               @RequestParam int price,
+                              @RequestParam(defaultValue = "true") boolean active,
                               @RequestParam int categoryId) {
-        return this.productService.createMenuProduct(name, description, price, categoryId);
+        return this.productService.createMenuProduct(name, description, price, active, categoryId);
     }
 
     //TODO GET(/menu/product): get all menu products
@@ -53,8 +54,9 @@ public class MenuProductController {
                               @RequestParam String name,
                               @RequestParam String description,
                               @RequestParam int price,
+                              @RequestParam(defaultValue = "true") boolean active,
                               @RequestParam int categoryId) {
-        return this.productService.updateMenuProduct(id, name, description, price, categoryId);
+        return this.productService.updateMenuProduct(id, name, description, price, active, categoryId);
     }
 
 

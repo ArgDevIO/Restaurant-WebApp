@@ -18,8 +18,8 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     }
 
     @Override
-    public MenuCategory createMenuCategory(String name, String icon) {
-        return this.categoryRepository.save(new MenuCategory(name, icon));
+    public MenuCategory createMenuCategory(String name, String icon, boolean active) {
+        return this.categoryRepository.save(new MenuCategory(name, icon, active));
     }
 
     @Override
@@ -38,12 +38,13 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     }
 
     @Override
-    public MenuCategory updateMenuCategory(int id, String name, String icon) {
+    public MenuCategory updateMenuCategory(int id, String name, String icon, boolean active) {
         MenuCategory category = this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
         MenuCategory newCategory = category.toBuilder().build();
 
         newCategory.setName(name);
         newCategory.setIcon(icon);
+        newCategory.setActive(active);
 
         if (!newCategory.equals(category))
             return this.categoryRepository.save(newCategory);

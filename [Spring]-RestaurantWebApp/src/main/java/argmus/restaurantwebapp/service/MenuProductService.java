@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MenuProductService {
 
-    MenuProduct createMenuProduct(String name, String description, int price, int categoryId);
+    MenuProduct createMenuProduct(String name, String description, int price, boolean active, int categoryId);
 
     List<MenuProduct> getAllMenuProducts();
 
@@ -14,5 +14,5 @@ public interface MenuProductService {
 
     void deleteMenuProduct(int id);
 
-    MenuProduct updateMenuProduct(int id, String name, String description, int price, int categoryId);
+    MenuProduct updateMenuProduct(int id, String name, String description, int price, boolean active, int categoryId);
 }
