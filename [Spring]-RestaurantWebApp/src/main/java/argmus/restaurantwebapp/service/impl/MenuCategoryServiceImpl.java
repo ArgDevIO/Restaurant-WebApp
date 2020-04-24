@@ -40,10 +40,13 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     @Override
     public MenuCategory updateMenuCategory(int id, String name, String icon) {
         MenuCategory category = this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
+        MenuCategory newCategory = category.toBuilder().build();
 
-        if (!name.isBlank()) category.setName(name);
-        if (!icon.isBlank()) category.setIcon(icon);
+        newCategory.setName(name);
+        newCategory.setIcon(icon);
 
-        return this.categoryRepository.save(category);
+        if (!newCategory.equals(category))
+            return this.categoryRepository.save(newCategory);
+        return category;
     }
 }
