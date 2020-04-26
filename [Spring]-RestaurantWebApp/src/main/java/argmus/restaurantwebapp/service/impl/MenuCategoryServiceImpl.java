@@ -59,4 +59,13 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     public List<MenuProduct> getAllProducts(int id) {
         return this.productRepository.findMenuProductsByCategory_Id(id);
     }
+
+    @Override
+    public List<MenuProduct> transferProducts(int fromId, int toId) {
+        List<MenuProduct> products = this.productRepository.findMenuProductsByCategory_Id(fromId);
+        MenuCategory newCategory = this.categoryRepository.findById(toId).orElseThrow(MenuCategoryDoesntExistException::new);
+
+        products.forEach(p -> p.setCategory(newCategory));
+        return this.productRepository.saveAll(products);
+    }
 }

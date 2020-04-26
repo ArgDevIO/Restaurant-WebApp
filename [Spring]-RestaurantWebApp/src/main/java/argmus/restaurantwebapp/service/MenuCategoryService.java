@@ -18,4 +18,6 @@ public interface MenuCategoryService {
     MenuCategory updateMenuCategory(int id, String name, String icon, boolean active);
 
     List<MenuProduct> getAllProducts(int id);
+
+    List<MenuProduct> transferProducts(int fromId, int toId);
 }
