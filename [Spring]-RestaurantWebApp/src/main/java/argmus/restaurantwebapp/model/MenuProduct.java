@@ -23,7 +23,7 @@ public class MenuProduct {
     private int price;
     private boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private MenuCategory category;
 
