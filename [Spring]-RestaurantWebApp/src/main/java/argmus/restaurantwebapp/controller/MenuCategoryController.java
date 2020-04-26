@@ -28,6 +28,13 @@ public class MenuCategoryController {
         return this.categoryService.createMenuCategory(name, icon, active);
     }
 
+    //TODO POST(/menu/category/{id}): transfer all products from category x to category y
+    @PostMapping("/{fromId}/transfer")
+    public List<MenuProduct> transferProducts(@PathVariable int fromId,
+                                              @RequestParam int toId) {
+        return this.categoryService.transferProducts(fromId, toId);
+    }
+
     //TODO GET(/menu/category): get all menu categories
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -40,13 +47,6 @@ public class MenuCategoryController {
     @ResponseStatus(HttpStatus.OK)
     public List<MenuProduct> getAllProducts(@PathVariable int id) {
         return this.categoryService.getAllProducts(id);
-    }
-
-    //TODO POST(/menu/category/{id}): transfer all products from category x to category y
-    @PostMapping("/{fromId}/transfer")
-    public List<MenuProduct> transferProducts(@PathVariable int fromId,
-                                              @RequestParam int toId) {
-        return this.categoryService.transferProducts(fromId, toId);
     }
 
     //TODO GET(/menu/category/{id}): get menu category by id
