@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.controller;
 
 import argmus.restaurantwebapp.model.MenuCategory;
+import argmus.restaurantwebapp.model.MenuProduct;
 import argmus.restaurantwebapp.service.MenuCategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.MimeTypeUtils;
@@ -35,6 +36,11 @@ public class MenuCategoryController {
     }
 
     //TODO GET(/menu/category/{id}/products): get all products by category id
+    @GetMapping("/{id}/products")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MenuProduct> getAllProducts(@PathVariable int id) {
+        return this.categoryService.getAllProducts(id);
+    }
 
     //TODO GET(/menu/category/{id}): get menu category by id
     @GetMapping("/{id}")

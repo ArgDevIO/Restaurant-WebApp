@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.service;
 
 import argmus.restaurantwebapp.model.MenuCategory;
+import argmus.restaurantwebapp.model.MenuProduct;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface MenuCategoryService {
     void deleteMenuCategory(int id);
 
     MenuCategory updateMenuCategory(int id, String name, String icon, boolean active);
+
+    List<MenuProduct> getAllProducts(int id);
 }
