@@ -3,6 +3,7 @@ package argmus.restaurantwebapp.service.impl;
 import argmus.restaurantwebapp.model.MenuCategory;
 import argmus.restaurantwebapp.model.MenuProduct;
 import argmus.restaurantwebapp.model.exceptions.MenuCategoryDoesntExistException;
+import argmus.restaurantwebapp.model.exceptions.MenuCategoryNotEmptyException;
 import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.repository.MenuProductRepository;
 import argmus.restaurantwebapp.service.MenuCategoryService;
@@ -38,6 +39,9 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
 
     @Override
     public void deleteMenuCategory(int id) {
+        if (this.productRepository.countMenuProductsByCategory_Id(id) != 0)
+            throw new MenuCategoryNotEmptyException("This category can't be deleted because it has products in it, " +
+                                                    "to delete it, please first transfer all products to another category!");
         this.categoryRepository.deleteById(id);
     }
 
