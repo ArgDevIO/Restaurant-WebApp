@@ -10,7 +10,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -48,17 +47,6 @@ public class User implements UserDetails {
 
     private Date created_At;
     private Date updated_At;
-
-    public User(String fullName, String email, String password, String confirmPassword, String phone, Address address) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
-        this.phone = phone;
-        this.addresses = new HashSet<>();
-        this.addresses.add(address);
-    }
-
 
     @PrePersist
     protected void onCreate() {
