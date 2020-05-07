@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @Data
@@ -30,6 +31,16 @@ public class User {
     private String password;
     @Transient
     private String confirmPassword;
+
+    @NotBlank(message = "Phone number is required")
+    private String phone;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<Address> addresses;
 
     private Date created_At;
     private Date updated_At;
