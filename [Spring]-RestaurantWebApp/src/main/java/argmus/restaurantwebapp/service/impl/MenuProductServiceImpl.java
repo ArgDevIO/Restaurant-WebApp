@@ -2,8 +2,8 @@ package argmus.restaurantwebapp.service.impl;
 
 import argmus.restaurantwebapp.model.MenuCategory;
 import argmus.restaurantwebapp.model.MenuProduct;
-import argmus.restaurantwebapp.model.exceptions.MenuCategoryDoesntExistException;
-import argmus.restaurantwebapp.model.exceptions.MenuProductDoesntExistException;
+import argmus.restaurantwebapp.exceptions.MenuCategoryDoesntExistException;
+import argmus.restaurantwebapp.exceptions.MenuProductDoesntExistException;
 import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.repository.MenuProductRepository;
 import argmus.restaurantwebapp.service.MenuProductService;

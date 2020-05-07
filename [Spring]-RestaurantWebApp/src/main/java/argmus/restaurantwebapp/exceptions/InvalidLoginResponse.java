@@ -1,4 +1,4 @@
-package argmus.restaurantwebapp.model.exceptions;
+package argmus.restaurantwebapp.exceptions;
 
 import lombok.Data;
 

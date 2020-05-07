@@ -1,4 +1,4 @@
-package argmus.restaurantwebapp.model.exceptions;
+package argmus.restaurantwebapp.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
