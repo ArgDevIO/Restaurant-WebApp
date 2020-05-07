@@ -1,10 +1,12 @@
 package argmus.restaurantwebapp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @NoArgsConstructor
 @Data
@@ -31,4 +33,19 @@ public class Address {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    private Date created_At;
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    private Date updated_At;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created_At = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated_At = new Date();
+    }
 }
