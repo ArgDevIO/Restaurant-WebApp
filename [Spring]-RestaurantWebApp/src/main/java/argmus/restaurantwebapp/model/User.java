@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String fullName;
 
     @Email(message = "Invalid email")
-    @NotBlank(message = "email is required")
+    @NotBlank(message = "Email is required")
     @Column(unique = true)
     private String email;
 
@@ -38,6 +38,7 @@ public class User implements UserDetails {
     private String confirmPassword;
 
     @NotBlank(message = "Phone number is required")
+    @Column(unique = true)
     private String phone;
 
     @OneToMany(
