@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -40,6 +41,19 @@ public class MenuCategory {
         this.products = new HashSet<>();
     }
 
+    private Date created_At;
+    private Date updated_At;
+
+    @PrePersist
+    protected void onCreate() {
+        this.created_At = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updated_At = new Date();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,17 +62,25 @@ public class MenuCategory {
         MenuCategory category = (MenuCategory) o;
 
         if (isActive() != category.isActive()) return false;
-        if (!getId().equals(category.getId())) return false;
-        if (!getName().equals(category.getName())) return false;
-        return getIcon() != null ? getIcon().equals(category.getIcon()) : category.getIcon() == null;
+        if (getId() != null ? !getId().equals(category.getId()) : category.getId() != null) return false;
+        if (getName() != null ? !getName().equals(category.getName()) : category.getName() != null) return false;
+        if (getIcon() != null ? !getIcon().equals(category.getIcon()) : category.getIcon() != null) return false;
+        if (getProducts() != null ? !getProducts().equals(category.getProducts()) : category.getProducts() != null)
+            return false;
+        if (getCreated_At() != null ? !getCreated_At().equals(category.getCreated_At()) : category.getCreated_At() != null)
+            return false;
+        return getUpdated_At() != null ? getUpdated_At().equals(category.getUpdated_At()) : category.getUpdated_At() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + getName().hashCode();
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getIcon() != null ? getIcon().hashCode() : 0);
         result = 31 * result + (isActive() ? 1 : 0);
+        result = 31 * result + (getProducts() != null ? getProducts().hashCode() : 0);
+        result = 31 * result + (getCreated_At() != null ? getCreated_At().hashCode() : 0);
+        result = 31 * result + (getUpdated_At() != null ? getUpdated_At().hashCode() : 0);
         return result;
     }
 }
