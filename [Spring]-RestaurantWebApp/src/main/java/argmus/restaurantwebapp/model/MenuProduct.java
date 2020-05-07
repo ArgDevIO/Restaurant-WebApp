@@ -1,5 +1,6 @@
 package argmus.restaurantwebapp.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,7 +37,9 @@ public class MenuProduct {
         this.category = category;
     }
 
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date updated_At;
 
     @PrePersist
