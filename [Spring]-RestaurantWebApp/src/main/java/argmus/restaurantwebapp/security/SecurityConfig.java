@@ -16,10 +16,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler) {
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint().and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
