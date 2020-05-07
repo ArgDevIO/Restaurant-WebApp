@@ -45,6 +45,16 @@ public class User {
     private Date created_At;
     private Date updated_At;
 
+    public User(String fullName, String email, String password, String confirmPassword, String phone, Set<Address> addresses) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+        this.phone = phone;
+        this.addresses = addresses;
+    }
+
+
     @PrePersist
     protected void onCreate() {
         this.created_At = new Date();
