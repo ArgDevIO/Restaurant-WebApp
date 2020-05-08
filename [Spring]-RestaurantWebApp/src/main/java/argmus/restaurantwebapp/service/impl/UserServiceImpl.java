@@ -1,5 +1,6 @@
 package argmus.restaurantwebapp.service.impl;
 
+import argmus.restaurantwebapp.exception.UserEmailException;
 import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.repository.AddressRepository;
@@ -25,18 +26,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User saveUser(User newUser) {
+        // Encode password
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-
+        // Get primary address from newUser
         Address primaryAddress = newUser.getAddresses().iterator().next();
+        // Clear addresses of newUser
         newUser.setAddresses(new HashSet<>());
 
-        User savedUser = this.userRepository.save(newUser);
-        primaryAddress.setUser(savedUser);
-        this.addressRepository.save(primaryAddress);
+        try {
+            User savedUser = this.userRepository.save(newUser);
+            primaryAddress.setUser(savedUser);
+            this.addressRepository.save(primaryAddress);
+            return savedUser;
+        } catch (Exception e) {
+            throw new UserEmailException("User email '" + newUser.getEmail() + "' already exists");
+        }
 
-        // email has to be unique (exception)
         // make sure that password & confirm password match
         // we don't persist or show the confirmPassword
-        return savedUser;
     }
 }
