@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -30,8 +31,9 @@ public class Address {
     private String village;
     private String coordinates;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")

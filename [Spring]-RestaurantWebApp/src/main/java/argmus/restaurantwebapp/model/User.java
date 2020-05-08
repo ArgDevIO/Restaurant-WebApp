@@ -10,9 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor
 @Data
@@ -43,10 +41,10 @@ public class User implements UserDetails {
 
     @OneToMany(
             mappedBy = "user",
-            cascade = CascadeType.PERSIST,
-            fetch = FetchType.LAZY
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
-    private Set<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
