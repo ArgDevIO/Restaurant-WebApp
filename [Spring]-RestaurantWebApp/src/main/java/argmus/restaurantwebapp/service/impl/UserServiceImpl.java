@@ -1,6 +1,6 @@
 package argmus.restaurantwebapp.service.impl;
 
-import argmus.restaurantwebapp.exception.UserEmailException;
+import argmus.restaurantwebapp.exception.UserException;
 import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.repository.AddressRepository;
@@ -8,8 +8,6 @@ import argmus.restaurantwebapp.repository.UserRepository;
 import argmus.restaurantwebapp.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,19 +28,29 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         // Get primary address from newUser
         Address primaryAddress = newUser.getAddresses().iterator().next();
-        // Clear addresses of newUser
-        newUser.setAddresses(new HashSet<>());
 
         try {
             User savedUser = this.userRepository.save(newUser);
             primaryAddress.setUser(savedUser);
             this.addressRepository.save(primaryAddress);
+
             return savedUser;
         } catch (Exception e) {
-            throw new UserEmailException("User email '" + newUser.getEmail() + "' already exists");
+            throw new UserException("User email '" + newUser.getEmail() + "' already exists");
         }
-
         // make sure that password & confirm password match
         // we don't persist or show the confirmPassword
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return this.userRepository.findById(userId).orElseThrow(() -> new UserException("User ID '" + userId + "' doesn't exist"));
+    }
+
+    @Override
+    public Address newAddressToUser(Long userId, Address address) {
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new UserException("User ID '" + userId + "' doesn't exist"));
+        address.setUser(user);
+        return this.addressRepository.save(address);
     }
 }
