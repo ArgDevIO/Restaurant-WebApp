@@ -4,6 +4,7 @@ import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.service.MapValidationErrorService;
 import argmus.restaurantwebapp.service.UserService;
+import argmus.restaurantwebapp.validator.UserValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
@@ -18,20 +19,23 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final UserValidator userValidator;
     private final MapValidationErrorService mapValidationErrorService;
 
-    public UserController(UserService userService, MapValidationErrorService mapValidationErrorService) {
+    public UserController(UserService userService, UserValidator userValidator, MapValidationErrorService mapValidationErrorService) {
         this.userService = userService;
+        this.userValidator = userValidator;
         this.mapValidationErrorService = mapValidationErrorService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
+        // Validate passwords match
+        userValidator.validate(user, result);
 
         ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
         if (errorMap != null) return errorMap;
 
-        // Validate passwords match
         return new ResponseEntity<>(this.userService.saveUser(user), HttpStatus.CREATED);
     }
 
