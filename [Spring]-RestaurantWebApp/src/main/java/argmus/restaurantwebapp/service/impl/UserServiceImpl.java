@@ -30,17 +30,16 @@ public class UserServiceImpl implements UserService {
         // Get primary address from newUser
         Address primaryAddress = newUser.getAddresses().iterator().next();
 
-        try {
-            User savedUser = this.userRepository.save(newUser);
-            primaryAddress.setUser(savedUser);
-            this.addressRepository.save(primaryAddress);
-
-            return savedUser;
-        } catch (Exception e) {
+        // Email has to be unique
+        if (this.userRepository.existsUserByEmail(newUser.getEmail()))
             throw new UserEmailAlreadyExistsException("User email '" + newUser.getEmail() + "' already exists");
-        }
-        // make sure that password & confirm password match
-        // we don't persist or show the confirmPassword
+
+        User savedUser = this.userRepository.save(newUser);
+        
+        primaryAddress.setUser(savedUser);
+        this.addressRepository.save(primaryAddress);
+
+        return savedUser;
     }
 
     @Override
