@@ -1,5 +1,6 @@
 package argmus.restaurantwebapp.controller;
 
+import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.service.MapValidationErrorService;
 import argmus.restaurantwebapp.service.UserService;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/user", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -31,5 +33,20 @@ public class UserController {
 
         // Validate passwords match
         return new ResponseEntity<>(this.userService.saveUser(user), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{userId}/address/new")
+    public ResponseEntity<?> newAddressToUser(@Valid @RequestBody Address address,
+                                              @PathVariable Long userId,
+                                              BindingResult result) {
+        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
+        if (errorMap != null) return errorMap;
+
+        return new ResponseEntity<>(this.userService.newAddressToUser(userId, address), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
+        return new ResponseEntity<>(this.userService.getUserById(userId), HttpStatus.OK);
     }
 }
