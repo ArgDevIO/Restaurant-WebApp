@@ -1,6 +1,7 @@
 package argmus.restaurantwebapp.service.impl;
 
-import argmus.restaurantwebapp.exception.UserException;
+import argmus.restaurantwebapp.exception.UserDoesntExistException;
+import argmus.restaurantwebapp.exception.UserEmailAlreadyExistsException;
 import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.repository.AddressRepository;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
             return savedUser;
         } catch (Exception e) {
-            throw new UserException("User email '" + newUser.getEmail() + "' already exists");
+            throw new UserEmailAlreadyExistsException("User email '" + newUser.getEmail() + "' already exists");
         }
         // make sure that password & confirm password match
         // we don't persist or show the confirmPassword
@@ -44,12 +45,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return this.userRepository.findById(userId).orElseThrow(() -> new UserException("User ID '" + userId + "' doesn't exist"));
+        return this.userRepository.findById(userId).orElseThrow(() -> new UserDoesntExistException("User with ID '" + userId + "' doesn't exist"));
     }
 
     @Override
     public Address newAddressToUser(Long userId, Address address) {
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new UserException("User ID '" + userId + "' doesn't exist"));
+        User user = getUserById(userId);
         address.setUser(user);
         return this.addressRepository.save(address);
     }

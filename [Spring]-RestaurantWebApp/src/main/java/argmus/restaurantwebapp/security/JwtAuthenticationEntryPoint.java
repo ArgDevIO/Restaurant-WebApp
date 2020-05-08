@@ -1,6 +1,6 @@
 package argmus.restaurantwebapp.security;
 
-import argmus.restaurantwebapp.exception.InvalidLoginResponse;
+import argmus.restaurantwebapp.exception.response.InvalidLoginResponse;
 import com.google.gson.Gson;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
