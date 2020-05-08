@@ -12,8 +12,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUserEmailException(UserEmailException ex) {
-        UserEmailExceptionResponse exceptionResponse = new UserEmailExceptionResponse(ex.getMessage());
+    public final ResponseEntity<Object> handleUserException(UserException ex) {
+        UserExceptionResponse exceptionResponse = ex.getMessage().toLowerCase().contains("email") ?
+                new UserExceptionResponse(ex.getMessage(), null) :
+                new UserExceptionResponse(null, ex.getMessage());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
+
+
 }
