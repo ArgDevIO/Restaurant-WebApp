@@ -3,6 +3,7 @@ package argmus.restaurantwebapp.security;
 import argmus.restaurantwebapp.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static argmus.restaurantwebapp.security.SecurityConstants.PRODUCTS_GET_URLS;
 import static argmus.restaurantwebapp.security.SecurityConstants.USER_REGISTER_URLS;
 
 @Configuration
@@ -55,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(USER_REGISTER_URLS).permitAll()
+                .antMatchers(HttpMethod.GET, PRODUCTS_GET_URLS).hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

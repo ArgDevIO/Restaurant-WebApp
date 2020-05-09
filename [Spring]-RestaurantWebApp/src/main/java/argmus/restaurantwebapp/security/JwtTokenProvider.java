@@ -28,6 +28,7 @@ public class JwtTokenProvider {
         claims.put("id", userId);
         claims.put("username", user.getUsername());
         claims.put("fullName", user.getFullName());
+        claims.put("roles", user.getAuthorities());
 
         return Jwts.builder()
                 .setSubject(userId)
