@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -20,7 +21,9 @@ public class MenuProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "Product name is required")
     private String name;
+    @NotBlank(message = "Product description is required")
     private String description;
     private int price;
     private boolean active;
@@ -28,14 +31,6 @@ public class MenuProduct {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private MenuCategory category;
-
-    public MenuProduct(String name, String description, int price, boolean active, MenuCategory category) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.active = active;
-        this.category = category;
-    }
 
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
