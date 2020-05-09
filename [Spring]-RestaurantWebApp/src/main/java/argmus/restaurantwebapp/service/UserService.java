@@ -9,5 +9,5 @@ public interface UserService {
 
     User getUserById(Long userId);
 
-    Address newAddressToUser(Long userId, Address address);
+    Address newAddressToUser(Long userId, Address address, String token);
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static argmus.restaurantwebapp.security.SecurityConstants.HEADER_STRING;
 import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
@@ -73,11 +74,12 @@ public class UserController {
     @PostMapping("/{userId}/addresses/new")
     public ResponseEntity<?> newAddressToUser(@Valid @RequestBody Address address,
                                               @PathVariable Long userId,
+                                              @RequestHeader(HEADER_STRING) String token,
                                               BindingResult result) {
         ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
         if (errorMap != null) return errorMap;
 
-        return new ResponseEntity<>(this.userService.newAddressToUser(userId, address), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.userService.newAddressToUser(userId, address, token), HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}")

@@ -8,12 +8,16 @@ import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.repository.AddressRepository;
 import argmus.restaurantwebapp.repository.RoleRepository;
 import argmus.restaurantwebapp.repository.UserRepository;
+import argmus.restaurantwebapp.security.JwtTokenProvider;
 import argmus.restaurantwebapp.service.UserService;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,12 +26,14 @@ public class UserServiceImpl implements UserService {
     private final AddressRepository addressRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -68,7 +74,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Address newAddressToUser(Long userId, Address address) {
+    public Address newAddressToUser(Long userId, Address address, String token) {
+        Long currentId = jwtTokenProvider.getUserIdFromJWT(token.substring(TOKEN_PREFIX.length()));
+        if (!userId.equals(currentId)) throw new AccessDeniedException("Can't access other users details!");
+
         User user = getUserById(userId);
         address.setUser(user);
         return this.addressRepository.save(address);
