@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MenuProductService {
 
-    MenuProduct createMenuProduct(String name, String description, int price, boolean active, int categoryId);
+    MenuProduct createMenuProduct(MenuProduct product);
 
     List<MenuProduct> getAllMenuProducts();
 

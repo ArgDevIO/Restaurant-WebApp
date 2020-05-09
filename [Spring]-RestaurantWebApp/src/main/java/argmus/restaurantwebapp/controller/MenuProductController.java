@@ -1,11 +1,15 @@
 package argmus.restaurantwebapp.controller;
 
 import argmus.restaurantwebapp.model.MenuProduct;
+import argmus.restaurantwebapp.service.MapValidationErrorService;
 import argmus.restaurantwebapp.service.MenuProductService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,20 +17,20 @@ import java.util.List;
 public class MenuProductController {
 
     private final MenuProductService productService;
+    private final MapValidationErrorService mapValidationErrorService;
 
-    public MenuProductController(MenuProductService productService) {
+    public MenuProductController(MenuProductService productService, MapValidationErrorService mapValidationErrorService) {
         this.productService = productService;
+        this.mapValidationErrorService = mapValidationErrorService;
     }
 
     //TODO POST(/api/menu/products): create new menu product
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public MenuProduct create(@RequestParam String name,
-                              @RequestParam String description,
-                              @RequestParam int price,
-                              @RequestParam(defaultValue = "true") boolean active,
-                              @RequestParam int categoryId) {
-        return this.productService.createMenuProduct(name, description, price, active, categoryId);
+    public ResponseEntity<?> create(@Valid @RequestBody MenuProduct product, BindingResult result) {
+        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
+        if (errorMap != null) return errorMap;
+
+        return new ResponseEntity<>(this.productService.createMenuProduct(product), HttpStatus.CREATED);
     }
 
     //TODO GET(/api/menu/products): get all menu products

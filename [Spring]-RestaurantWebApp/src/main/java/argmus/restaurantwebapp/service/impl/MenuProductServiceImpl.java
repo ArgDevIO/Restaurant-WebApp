@@ -23,10 +23,11 @@ public class MenuProductServiceImpl implements MenuProductService {
     }
 
     @Override
-    public MenuProduct createMenuProduct(String name, String description, int price, boolean active, int categoryId) {
-        MenuCategory category = this.categoryRepository.findById(categoryId).orElseThrow(MenuCategoryDoesntExistException::new);
+    public MenuProduct createMenuProduct(MenuProduct product) {
+        MenuCategory category = this.categoryRepository.findById(product.getCategory().getId()).orElseThrow(MenuCategoryDoesntExistException::new);
+        product.setCategory(category);
 
-        return this.productRepository.save(new MenuProduct(name, description, price, active, category));
+        return this.productRepository.save(product);
     }
 
     @Override
