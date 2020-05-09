@@ -1,0 +1,21 @@
+- User REST API:
+POST /api/users/register                       # Register new User
+POST /api/users/login                          # Login
+POST /api/users/{id}/addresses/new             # Add new Address to User by ID
+GET  /api/users/{id}                           # Get User by ID
+
+- MenuCategory REST API:
+POST /api/menu/categories                      # Create new Category
+POST /api/menu/categories/{id}/transfer        # Transfer all products from one category to another
+GET  /api/menu/categories                      # Get all Categories
+GET  /api/menu/categories/{id}                 # Get Category by ID
+GET  /api/menu/categories/{id}/products        # Get all Products by Category ID
+DEL  /api/menu/categories/{id}                 # Delete Category by ID
+PUT  /api/menu/categories/{id}                 # Update Category by ID
+
+- MenuProduct REST API:
+POST /api/menu/products                      # Create new Product
+GET  /api/menu/products                      # Get all Products
+GET  /api/menu/products/{id}                 # Get Product by ID
+DEL  /api/menu/products/{id}                 # Delete Product by ID
+PUT  /api/menu/products/{id}                 # Update Product by ID
