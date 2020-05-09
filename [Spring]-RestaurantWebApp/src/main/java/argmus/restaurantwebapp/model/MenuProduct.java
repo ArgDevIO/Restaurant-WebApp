@@ -20,7 +20,7 @@ public class MenuProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @NotBlank(message = "Product name is required")
     private String name;
     @NotBlank(message = "Product description is required")
@@ -60,11 +60,7 @@ public class MenuProduct {
         if (getName() != null ? !getName().equals(product.getName()) : product.getName() != null) return false;
         if (getDescription() != null ? !getDescription().equals(product.getDescription()) : product.getDescription() != null)
             return false;
-        if (getCategory() != null ? !getCategory().equals(product.getCategory()) : product.getCategory() != null)
-            return false;
-        if (getCreated_At() != null ? !getCreated_At().equals(product.getCreated_At()) : product.getCreated_At() != null)
-            return false;
-        return getUpdated_At() != null ? getUpdated_At().equals(product.getUpdated_At()) : product.getUpdated_At() == null;
+        return getCategory() != null ? getCategory().equals(product.getCategory()) : product.getCategory() == null;
     }
 
     @Override
@@ -75,8 +71,6 @@ public class MenuProduct {
         result = 31 * result + getPrice();
         result = 31 * result + (isActive() ? 1 : 0);
         result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
-        result = 31 * result + (getCreated_At() != null ? getCreated_At().hashCode() : 0);
-        result = 31 * result + (getUpdated_At() != null ? getUpdated_At().hashCode() : 0);
         return result;
     }
 }

@@ -41,25 +41,24 @@ public class MenuProductController {
 
     //TODO GET(/api/menu/products/{id}): get menu product by id
     @GetMapping("/{id}")
-    public MenuProduct get(@PathVariable int id) {
+    public MenuProduct get(@PathVariable Long id) {
         return this.productService.getMenuProduct(id);
     }
 
     //TODO DELETE(/api/menu/products/{id}): delete menu product by id
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         this.productService.deleteMenuProduct(id);
     }
 
     //TODO PUT(/api/menu/products/{id}): update menu product by id
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public MenuProduct update(@PathVariable int id,
-                              @RequestParam String name,
-                              @RequestParam String description,
-                              @RequestParam int price,
-                              @RequestParam(defaultValue = "true") boolean active,
-                              @RequestParam int categoryId) {
-        return this.productService.updateMenuProduct(id, name, description, price, active, categoryId);
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @Valid @RequestBody MenuProduct product,
+                                    BindingResult result) {
+        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
+        if (errorMap != null) return errorMap;
+
+        return new ResponseEntity<>(this.productService.updateMenuProduct(id, product), HttpStatus.OK);
     }
 }

@@ -23,7 +23,7 @@ public class MenuCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @NotBlank(message = "Category name is required")
     private String name;
     private String icon;
@@ -69,12 +69,7 @@ public class MenuCategory {
         if (isActive() != category.isActive()) return false;
         if (getId() != null ? !getId().equals(category.getId()) : category.getId() != null) return false;
         if (getName() != null ? !getName().equals(category.getName()) : category.getName() != null) return false;
-        if (getIcon() != null ? !getIcon().equals(category.getIcon()) : category.getIcon() != null) return false;
-        if (getProducts() != null ? !getProducts().equals(category.getProducts()) : category.getProducts() != null)
-            return false;
-        if (getCreated_At() != null ? !getCreated_At().equals(category.getCreated_At()) : category.getCreated_At() != null)
-            return false;
-        return getUpdated_At() != null ? getUpdated_At().equals(category.getUpdated_At()) : category.getUpdated_At() == null;
+        return getIcon() != null ? getIcon().equals(category.getIcon()) : category.getIcon() == null;
     }
 
     @Override
@@ -83,9 +78,6 @@ public class MenuCategory {
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getIcon() != null ? getIcon().hashCode() : 0);
         result = 31 * result + (isActive() ? 1 : 0);
-        result = 31 * result + (getProducts() != null ? getProducts().hashCode() : 0);
-        result = 31 * result + (getCreated_At() != null ? getCreated_At().hashCode() : 0);
-        result = 31 * result + (getUpdated_At() != null ? getUpdated_At().hashCode() : 0);
         return result;
     }
 }

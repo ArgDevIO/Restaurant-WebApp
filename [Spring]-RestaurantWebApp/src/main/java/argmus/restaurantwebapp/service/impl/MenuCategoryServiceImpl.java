@@ -23,8 +23,8 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     }
 
     @Override
-    public MenuCategory createMenuCategory(String name, String icon, boolean active) {
-        return this.categoryRepository.save(new MenuCategory(name, icon, active));
+    public MenuCategory createMenuCategory(MenuCategory category) {
+        return this.categoryRepository.save(category);
     }
 
     @Override
@@ -33,12 +33,12 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     }
 
     @Override
-    public MenuCategory getMenuCategory(int id) {
+    public MenuCategory getMenuCategory(Long id) {
         return this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
     }
 
     @Override
-    public void deleteMenuCategory(int id) {
+    public void deleteMenuCategory(Long id) {
         if (this.productRepository.countMenuProductsByCategory_Id(id) != 0)
             throw new MenuCategoryNotEmptyException("This category can't be deleted because it has products in it, " +
                                                     "to delete it, please first transfer all products to another category!");
@@ -46,26 +46,21 @@ public class MenuCategoryServiceImpl implements MenuCategoryService {
     }
 
     @Override
-    public MenuCategory updateMenuCategory(int id, String name, String icon, boolean active) {
-        MenuCategory category = this.categoryRepository.findById(id).orElseThrow(MenuCategoryDoesntExistException::new);
-        MenuCategory newCategory = category.toBuilder().build();
+    public MenuCategory updateMenuCategory(Long id, MenuCategory category) {
+        MenuCategory existingCategory = this.categoryRepository.findById(category.getId()).orElseThrow(MenuCategoryDoesntExistException::new);
 
-        newCategory.setName(name);
-        newCategory.setIcon(icon);
-        newCategory.setActive(active);
-
-        if (!newCategory.equals(category))
-            return this.categoryRepository.save(newCategory);
-        return category;
+        if (!existingCategory.equals(category))
+            return this.categoryRepository.save(category);
+        return existingCategory;
     }
 
     @Override
-    public List<MenuProduct> getAllProducts(int id) {
+    public List<MenuProduct> getAllProducts(Long id) {
         return this.productRepository.findMenuProductsByCategory_Id(id);
     }
 
     @Override
-    public List<MenuProduct> transferProducts(int fromId, int toId) {
+    public List<MenuProduct> transferProducts(Long fromId, Long toId) {
         List<MenuProduct> products = this.productRepository.findMenuProductsByCategory_Id(fromId);
         MenuCategory newCategory = this.categoryRepository.findById(toId).orElseThrow(MenuCategoryDoesntExistException::new);
 

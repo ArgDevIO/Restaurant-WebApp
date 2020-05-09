@@ -10,9 +10,9 @@ public interface MenuProductService {
 
     List<MenuProduct> getAllMenuProducts();
 
-    MenuProduct getMenuProduct(int id);
+    MenuProduct getMenuProduct(Long id);
 
-    void deleteMenuProduct(int id);
+    void deleteMenuProduct(Long id);
 
-    MenuProduct updateMenuProduct(int id, String name, String description, int price, boolean active, int categoryId);
+    MenuProduct updateMenuProduct(Long id, MenuProduct product);
 }

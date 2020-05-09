@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface MenuCategoryService {
 
-    MenuCategory createMenuCategory(String name, String icon, boolean active);
+    MenuCategory createMenuCategory(MenuCategory category);
 
     List<MenuCategory> getAllMenuCategories();
 
-    MenuCategory getMenuCategory(int id);
+    MenuCategory getMenuCategory(Long id);
 
-    void deleteMenuCategory(int id);
+    void deleteMenuCategory(Long id);
 
-    MenuCategory updateMenuCategory(int id, String name, String icon, boolean active);
+    MenuCategory updateMenuCategory(Long id, MenuCategory category);
 
-    List<MenuProduct> getAllProducts(int id);
+    List<MenuProduct> getAllProducts(Long id);
 
-    List<MenuProduct> transferProducts(int fromId, int toId);
+    List<MenuProduct> transferProducts(Long fromId, Long toId);
 }

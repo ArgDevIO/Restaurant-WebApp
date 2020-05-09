@@ -1,9 +1,9 @@
 package argmus.restaurantwebapp.service.impl;
 
-import argmus.restaurantwebapp.model.MenuCategory;
-import argmus.restaurantwebapp.model.MenuProduct;
 import argmus.restaurantwebapp.exception.MenuCategoryDoesntExistException;
 import argmus.restaurantwebapp.exception.MenuProductDoesntExistException;
+import argmus.restaurantwebapp.model.MenuCategory;
+import argmus.restaurantwebapp.model.MenuProduct;
 import argmus.restaurantwebapp.repository.MenuCategoryRepository;
 import argmus.restaurantwebapp.repository.MenuProductRepository;
 import argmus.restaurantwebapp.service.MenuProductService;
@@ -36,30 +36,24 @@ public class MenuProductServiceImpl implements MenuProductService {
     }
 
     @Override
-    public MenuProduct getMenuProduct(int id) {
+    public MenuProduct getMenuProduct(Long id) {
         return this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
     }
 
     @Override
-    public void deleteMenuProduct(int id) {
+    public void deleteMenuProduct(Long id) {
         this.productRepository.deleteById(id);
     }
 
     @Override
-    public MenuProduct updateMenuProduct(int id, String name, String description, int price, boolean active, int categoryId) {
-        MenuProduct product = this.productRepository.findById(id).orElseThrow(MenuProductDoesntExistException::new);
-        MenuProduct newProduct = product.toBuilder().build();
-        
-        MenuCategory category = this.categoryRepository.findById(categoryId).orElseThrow(MenuCategoryDoesntExistException::new);
+    public MenuProduct updateMenuProduct(Long id, MenuProduct product) {
+        MenuProduct existingProduct = this.productRepository.findById(product.getId()).orElseThrow(MenuProductDoesntExistException::new);
 
-        newProduct.setName(name);
-        newProduct.setDescription(description);
-        newProduct.setPrice(price);
-        newProduct.setActive(active);
-        newProduct.setCategory(category);
+        MenuCategory category = this.categoryRepository.findById(product.getCategory().getId()).orElseThrow(MenuCategoryDoesntExistException::new);
+        product.setCategory(category);
 
-        if (!newProduct.equals(product))
-            return this.productRepository.save(newProduct);
-        return product;
+        if (!existingProduct.equals(product))
+            return this.productRepository.save(product);
+        return existingProduct;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 
-public interface MenuProductRepository extends JpaRepository<MenuProduct, Integer> {
-    List<MenuProduct> findMenuProductsByCategory_Id(int id);
-    int countMenuProductsByCategory_Id(int id);
+public interface MenuProductRepository extends JpaRepository<MenuProduct, Long> {
+    List<MenuProduct> findMenuProductsByCategory_Id(Long id);
+    int countMenuProductsByCategory_Id(Long id);
 }
