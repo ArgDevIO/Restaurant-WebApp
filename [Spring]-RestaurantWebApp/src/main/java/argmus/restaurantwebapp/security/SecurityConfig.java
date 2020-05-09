@@ -15,9 +15,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static argmus.restaurantwebapp.security.SecurityConstants.PRODUCTS_GET_URLS;
-import static argmus.restaurantwebapp.security.SecurityConstants.USER_REGISTER_URLS;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -56,8 +53,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(USER_REGISTER_URLS).permitAll()
-                .antMatchers(HttpMethod.GET, PRODUCTS_GET_URLS).hasRole("ADMIN")
+
+                // Users
+                .antMatchers(HttpMethod.POST, "/api/users/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/{\\d+}/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/users/{\\d+}/**").authenticated()
+
+                // Categories
+                .antMatchers(HttpMethod.GET, "/api/menu/categories/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/menu/categories/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/menu/categories/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/menu/categories/**").hasRole("ADMIN")
+
+                // Products
+                .antMatchers(HttpMethod.GET, "/api/menu/products/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/menu/products/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/menu/products/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "//api/menu/products/**").hasRole("ADMIN")
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
