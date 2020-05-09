@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
-@RequestMapping(value = "/user", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/users", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 @CrossOrigin
 public class UserController {
 
@@ -39,6 +39,17 @@ public class UserController {
         this.mapValidationErrorService = mapValidationErrorService;
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
+        // Validate passwords match
+        userValidator.validate(user, result);
+
+        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
+        if (errorMap != null) return errorMap;
+
+        return new ResponseEntity<>(this.userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
@@ -59,18 +70,7 @@ public class UserController {
         return ResponseEntity.ok(new JWTLoginSuccessResponse(true, jwt));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
-        // Validate passwords match
-        userValidator.validate(user, result);
-
-        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
-        if (errorMap != null) return errorMap;
-
-        return new ResponseEntity<>(this.userService.saveUser(user), HttpStatus.CREATED);
-    }
-
-    @PostMapping("/{userId}/address/new")
+    @PostMapping("/{userId}/addresses/new")
     public ResponseEntity<?> newAddressToUser(@Valid @RequestBody Address address,
                                               @PathVariable Long userId,
                                               BindingResult result) {

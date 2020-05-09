@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/menu/product", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/menu/products", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class MenuProductController {
 
     private final MenuProductService productService;
@@ -18,7 +18,7 @@ public class MenuProductController {
         this.productService = productService;
     }
 
-    //TODO POST(/menu/product): create new menu product
+    //TODO POST(/api/menu/products): create new menu product
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MenuProduct create(@RequestParam String name,
@@ -29,25 +29,25 @@ public class MenuProductController {
         return this.productService.createMenuProduct(name, description, price, active, categoryId);
     }
 
-    //TODO GET(/menu/product): get all menu products
+    //TODO GET(/api/menu/products): get all menu products
     @GetMapping
     public List<MenuProduct> getAll() {
         return this.productService.getAllMenuProducts();
     }
 
-    //TODO GET(/menu/product/{id}): get menu product by id
+    //TODO GET(/api/menu/products/{id}): get menu product by id
     @GetMapping("/{id}")
     public MenuProduct get(@PathVariable int id) {
         return this.productService.getMenuProduct(id);
     }
 
-    //TODO DELETE(/menu/product/{id}): delete menu product by id
+    //TODO DELETE(/api/menu/products/{id}): delete menu product by id
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         this.productService.deleteMenuProduct(id);
     }
 
-    //TODO PUT(/menu/product/{id}): update menu product by id
+    //TODO PUT(/api/menu/products/{id}): update menu product by id
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MenuProduct update(@PathVariable int id,
@@ -58,6 +58,4 @@ public class MenuProductController {
                               @RequestParam int categoryId) {
         return this.productService.updateMenuProduct(id, name, description, price, active, categoryId);
     }
-
-
 }

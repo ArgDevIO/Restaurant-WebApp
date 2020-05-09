@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/menu/category", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/menu/categories", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class MenuCategoryController {
 
     private final MenuCategoryService categoryService;
@@ -19,7 +19,7 @@ public class MenuCategoryController {
         this.categoryService = categoryService;
     }
 
-    //TODO POST(/menu/category): create new menu category
+    //TODO POST(/api/menu/categories): create new menu category
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MenuCategory create(@RequestParam String name,
@@ -28,42 +28,42 @@ public class MenuCategoryController {
         return this.categoryService.createMenuCategory(name, icon, active);
     }
 
-    //TODO POST(/menu/category/{id}): transfer all products from category x to category y
+    //TODO POST(/api/menu/categories/{id}/transfer): transfer all products from category x to category y
     @PostMapping("/{fromId}/transfer")
     public List<MenuProduct> transferProducts(@PathVariable int fromId,
                                               @RequestParam int toId) {
         return this.categoryService.transferProducts(fromId, toId);
     }
 
-    //TODO GET(/menu/category): get all menu categories
+    //TODO GET(/api/menu/categories): get all menu categories
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MenuCategory> getAll() {
         return this.categoryService.getAllMenuCategories();
     }
 
-    //TODO GET(/menu/category/{id}/products): get all products by category id
-    @GetMapping("/{id}/products")
-    @ResponseStatus(HttpStatus.OK)
-    public List<MenuProduct> getAllProducts(@PathVariable int id) {
-        return this.categoryService.getAllProducts(id);
-    }
-
-    //TODO GET(/menu/category/{id}): get menu category by id
+    //TODO GET(/api/menu/categories/{id} ): get menu category by id
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MenuCategory get(@PathVariable int id) {
         return this.categoryService.getMenuCategory(id);
     }
 
-    //TODO DELETE(/menu/category/{id}): delete menu category by id
+    //TODO GET(/api/menu/categories/{id}/products): get all products by category id
+    @GetMapping("/{id}/products")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MenuProduct> getAllProducts(@PathVariable int id) {
+        return this.categoryService.getAllProducts(id);
+    }
+
+    //TODO DELETE(/api/menu/categories/{id}): delete menu category by id
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         this.categoryService.deleteMenuCategory(id);
     }
 
-    //TODO PUT(/menu/category/{id}): update menu category by id
+    //TODO PUT(/api/menu/categories/{id}): update menu category by id
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MenuCategory update(@PathVariable int id,
