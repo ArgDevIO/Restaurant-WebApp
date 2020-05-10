@@ -24,6 +24,6 @@ DEL  /api/menu/products/{id}                   # Delete Product by ID // ADMIN
 PUT  /api/menu/products/{id}                   # Update Product by ID // ADMIN
 
 - Order REST API:
-POST /api/orders/new                       # Register new User  // PUBLIC
-GET /api/orders                            # Login // PUBLIC
-GET /api/orders/{id}                       # Add new Address to User by ID // AUTHENTICATED
+POST /api/orders/new                           # Create new Order  // AUTHENTICATED
+GET /api/orders                                # Get all orders // ADMIN
+GET /api/orders/{id}                           # Get all orders by User ID // AUTHENTICATED
