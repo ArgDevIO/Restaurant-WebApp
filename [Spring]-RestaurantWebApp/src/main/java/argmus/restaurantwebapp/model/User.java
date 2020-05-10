@@ -2,6 +2,8 @@ package argmus.restaurantwebapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,8 +34,11 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
+    @JsonInclude(Include.NON_NULL)
     @NotBlank(message = "Password is required")
     private String password;
+
+    @JsonInclude(Include.NON_NULL)
     @Transient
     private String confirmPassword;
 
@@ -41,6 +46,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String phone;
 
+    @JsonInclude(Include.NON_NULL)
     @EqualsAndHashCode.Exclude
     @OneToMany(
             mappedBy = "user",
@@ -49,6 +55,7 @@ public class User implements UserDetails {
     )
     private List<Address> addresses = new ArrayList<>();
 
+    @JsonInclude(Include.NON_NULL)
     @EqualsAndHashCode.Exclude
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
@@ -58,8 +65,18 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<Order> orders = new HashSet<>();
+
+    @JsonInclude(Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
+    @JsonInclude(Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date updated_At;
 

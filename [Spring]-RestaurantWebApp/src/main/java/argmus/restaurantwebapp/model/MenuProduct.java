@@ -1,6 +1,9 @@
 package argmus.restaurantwebapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +12,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,12 +32,19 @@ public class MenuProduct {
     private int price;
     private boolean active;
 
+    @JsonInclude(Include.NON_NULL)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private MenuCategory category;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private Set<OrderProduct> orderProducts;
+
+    @JsonInclude(Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
+    @JsonInclude(Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date updated_At;
 

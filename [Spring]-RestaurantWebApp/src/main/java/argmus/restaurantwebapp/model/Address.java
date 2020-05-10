@@ -2,12 +2,15 @@ package argmus.restaurantwebapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Data
@@ -36,8 +39,18 @@ public class Address {
     @JsonIgnore
     private User user;
 
+    @JsonIgnore
+    @OneToMany(
+            mappedBy = "address",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private Set<Order> orders = new HashSet<>();
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date created_At;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date updated_At;
 
@@ -49,5 +62,44 @@ public class Address {
     @PreUpdate
     protected void onUpdate() {
         this.updated_At = new Date();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address)) return false;
+
+        Address address = (Address) o;
+
+        if (getNumber() != address.getNumber()) return false;
+        if (getEntry() != address.getEntry()) return false;
+        if (getApartment() != address.getApartment()) return false;
+        if (getId() != null ? !getId().equals(address.getId()) : address.getId() != null) return false;
+        if (getName() != null ? !getName().equals(address.getName()) : address.getName() != null) return false;
+        if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
+        if (getInterphoneCode() != null ? !getInterphoneCode().equals(address.getInterphoneCode()) : address.getInterphoneCode() != null)
+            return false;
+        if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
+        if (getVillage() != null ? !getVillage().equals(address.getVillage()) : address.getVillage() != null)
+            return false;
+        if (getCoordinates() != null ? !getCoordinates().equals(address.getCoordinates()) : address.getCoordinates() != null)
+            return false;
+        return getUser() != null ? getUser().equals(address.getUser()) : address.getUser() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
+        result = 31 * result + getNumber();
+        result = 31 * result + getEntry();
+        result = 31 * result + getApartment();
+        result = 31 * result + (getInterphoneCode() != null ? getInterphoneCode().hashCode() : 0);
+        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
+        result = 31 * result + (getVillage() != null ? getVillage().hashCode() : 0);
+        result = 31 * result + (getCoordinates() != null ? getCoordinates().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+        return result;
     }
 }
