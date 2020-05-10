@@ -71,6 +71,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         List<Order> orders = this.orderRepository.findAll();
+
+        return formatOrders(orders);
+    }
+
+    @Override
+    public List<Order> getAllOrdersByUser(Long id) {
+        List<Order> orders = this.orderRepository.findOrdersByUser_Id(id);
+        return formatOrders(orders);
+    }
+
+    private List<Order> formatOrders(List<Order> orders) {
         orders.forEach(order -> {
             order.getUser().setAddresses(null);
             order.getUser().setRoles(null);
@@ -93,7 +104,6 @@ public class OrderServiceImpl implements OrderService {
                 order.setOrderProducts(orderProducts);
             }
         });
-
         return orders;
     }
 }

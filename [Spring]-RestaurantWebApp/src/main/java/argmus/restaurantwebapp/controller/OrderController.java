@@ -32,4 +32,9 @@ public class OrderController {
     public ResponseEntity<?> getAllOrders() {
         return new ResponseEntity<>(this.orderService.getAllOrders(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAllOrdersByUser(@PathVariable Long id) {
+        return new ResponseEntity<>(this.orderService.getAllOrdersByUser(id), HttpStatus.OK);
+    }
 }

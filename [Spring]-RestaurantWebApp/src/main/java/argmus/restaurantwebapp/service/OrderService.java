@@ -9,4 +9,6 @@ public interface OrderService {
     Order newOrder(JsonObject jsonOrder);
 
     List<Order> getAllOrders();
+
+    List<Order> getAllOrdersByUser(Long id);
 }
