@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
+import static argmus.restaurantwebapp.security.SecurityConstants.HEADER_STRING;
+
 @RestController
 @RequestMapping(value = "/api/orders", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 public class OrderController {
@@ -33,8 +35,9 @@ public class OrderController {
         return new ResponseEntity<>(this.orderService.getAllOrders(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getAllOrdersByUser(@PathVariable Long id) {
-        return new ResponseEntity<>(this.orderService.getAllOrdersByUser(id), HttpStatus.OK);
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getAllOrdersByUser(@PathVariable Long userId,
+                                                @RequestHeader(HEADER_STRING) String token) {
+        return new ResponseEntity<>(this.orderService.getAllOrdersByUser(userId, token), HttpStatus.OK);
     }
 }

@@ -5,12 +5,16 @@ import argmus.restaurantwebapp.exception.MenuProductDoesntExistException;
 import argmus.restaurantwebapp.exception.UserDoesntExistException;
 import argmus.restaurantwebapp.model.*;
 import argmus.restaurantwebapp.repository.*;
+import argmus.restaurantwebapp.security.JwtTokenProvider;
 import argmus.restaurantwebapp.service.OrderService;
 import com.google.gson.JsonObject;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -21,12 +25,15 @@ public class OrderServiceImpl implements OrderService {
     private final OrderProductRepository orderProductRepository;
     private final AddressRepository addressRepository;
 
-    public OrderServiceImpl(UserRepository userRepository, MenuProductRepository menuProductRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository, AddressRepository addressRepository) {
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public OrderServiceImpl(UserRepository userRepository, MenuProductRepository menuProductRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository, AddressRepository addressRepository, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.menuProductRepository = menuProductRepository;
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
         this.addressRepository = addressRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -76,8 +83,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrdersByUser(Long id) {
-        List<Order> orders = this.orderRepository.findOrdersByUser_Id(id);
+    public List<Order> getAllOrdersByUser(Long userId, String token) {
+        if (!jwtTokenProvider.checkIfAdmin(token.substring(TOKEN_PREFIX.length()))) {
+            Long currentId = jwtTokenProvider.getUserIdFromJWT(token.substring(TOKEN_PREFIX.length()));
+            if (!userId.equals(currentId)) throw new AccessDeniedException("Can't access other users details!");
+        }
+
+        List<Order> orders = this.orderRepository.findOrdersByUser_Id(userId);
         return formatOrders(orders);
     }
 

@@ -5,9 +5,7 @@ import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static argmus.restaurantwebapp.security.SecurityConstants.EXPIRATION_TIME;
 import static argmus.restaurantwebapp.security.SecurityConstants.SECRET;
@@ -64,5 +62,12 @@ public class JwtTokenProvider {
         String id = (String)claims.get("id");
 
         return Long.parseLong(id);
+    }
+
+    public boolean checkIfAdmin(String token) {
+        Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+        ArrayList<?> roles = (ArrayList<?>)claims.get("roles");
+
+        return roles.stream().anyMatch(role -> ((LinkedHashMap<?, ?>)role).containsValue("ROLE_ADMIN"));
     }
 }
