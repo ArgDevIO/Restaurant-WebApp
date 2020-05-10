@@ -25,7 +25,7 @@ import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping(value = "/api/users", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private final UserService userService;

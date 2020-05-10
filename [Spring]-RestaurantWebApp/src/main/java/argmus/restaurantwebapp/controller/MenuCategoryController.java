@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/menu/categories", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:3000")
 public class MenuCategoryController {
 
     private final MenuCategoryService categoryService;

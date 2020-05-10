@@ -13,6 +13,7 @@ import static argmus.restaurantwebapp.security.SecurityConstants.HEADER_STRING;
 
 @RestController
 @RequestMapping(value = "/api/orders", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderController {
 
     private final OrderService orderService;
