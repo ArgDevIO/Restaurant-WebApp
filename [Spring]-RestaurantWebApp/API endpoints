@@ -17,11 +17,13 @@ DEL  /api/menu/categories/{id}                 # Delete Category by ID // ADMIN
 PUT  /api/menu/categories/{id}                 # Update Category by ID // ADMIN
 
 - Menu Products REST API:
-POST /api/menu/products                      # Create new Product // ADMIN
-GET  /api/menu/products                      # Get all Products // PUBLIC
-GET  /api/menu/products/{id}                 # Get Product by ID // PUBLIC
-DEL  /api/menu/products/{id}                 # Delete Product by ID // ADMIN
-PUT  /api/menu/products/{id}                 # Update Product by ID // ADMIN
+POST /api/menu/products                        # Create new Product // ADMIN
+GET  /api/menu/products                        # Get all Products // PUBLIC
+GET  /api/menu/products/{id}                   # Get Product by ID // PUBLIC
+DEL  /api/menu/products/{id}                   # Delete Product by ID // ADMIN
+PUT  /api/menu/products/{id}                   # Update Product by ID // ADMIN
 
-//TODO
-    - Order REST API:
+- Order REST API:
+POST /api/orders/new                       # Register new User  // PUBLIC
+GET /api/orders                            # Login // PUBLIC
+GET /api/orders/{id}                       # Add new Address to User by ID // AUTHENTICATED
