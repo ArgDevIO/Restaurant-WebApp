@@ -1,0 +1,23 @@
+html {
+  background: url('./assets/images/background_main.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.mapouter {
+  position: relative;
+  text-align: right;
+  height: 100%;
+  width: 100%;
+}
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 100%;
+  width: 100%;
+}
