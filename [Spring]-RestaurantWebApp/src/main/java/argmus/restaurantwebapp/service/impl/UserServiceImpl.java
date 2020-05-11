@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User newUser) {
+    public User registerUser(User newUser, String role) {
         // Email has to be unique
         if (this.userRepository.existsUserByEmail(newUser.getEmail()))
             throw new UserEmailAlreadyExistsException("User email '" + newUser.getEmail() + "' already exists");
@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
         if (!newUser.getAddresses().isEmpty())
             primaryAddress = newUser.getAddresses().iterator().next();
 
-        // Get roles from newUser
-        Set<Role> roles = getRolesFromDB(newUser.getRoles());
-        roles.forEach(role -> role.getUsers().add(newUser));
-        newUser.setRoles(roles);
+        // Set ROLE_? to newUser
+        Role roleUser = this.roleRepository.findRoleByName(role);
+        roleUser.getUsers().add(newUser);
+        newUser.getRoles().add(roleUser);
 
         // Save to DB
         User savedUser = this.userRepository.save(newUser);
@@ -63,13 +63,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return savedUser;
-    }
-
-    private Set<Role> getRolesFromDB(Set<Role> newRoles) {
-        // Get newUser roles from DB
-        Set<Role> dbRoles = new HashSet<>();
-        newRoles.forEach(role -> dbRoles.add(this.roleRepository.findRoleByName(role.getName())));
-        return dbRoles;
     }
 
     @Override
