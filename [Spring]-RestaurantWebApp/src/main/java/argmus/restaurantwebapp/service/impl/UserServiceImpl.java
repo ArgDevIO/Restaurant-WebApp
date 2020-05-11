@@ -45,7 +45,9 @@ public class UserServiceImpl implements UserService {
         // Encode password
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         // Get primary address from newUser
-        Address primaryAddress = newUser.getAddresses().iterator().next();
+        Address primaryAddress = null;
+        if (!newUser.getAddresses().isEmpty())
+            primaryAddress = newUser.getAddresses().iterator().next();
 
         // Get roles from newUser
         Set<Role> roles = getRolesFromDB(newUser.getRoles());
@@ -55,8 +57,10 @@ public class UserServiceImpl implements UserService {
         // Save to DB
         User savedUser = this.userRepository.save(newUser);
 
-        primaryAddress.setUser(savedUser);
-        this.addressRepository.save(primaryAddress);
+        if (primaryAddress != null) {
+            primaryAddress.setUser(savedUser);
+            this.addressRepository.save(primaryAddress);
+        }
 
         return savedUser;
     }
@@ -81,5 +85,23 @@ public class UserServiceImpl implements UserService {
         User user = getUserById(userId);
         address.setUser(user);
         return this.addressRepository.save(address);
+    }
+
+    @Override
+    public void initAdmin(Role adminRole) {
+        if (!this.userRepository.existsUserByEmail("admin@garden.com")) {
+            Set<Role> roles = new HashSet<>();
+            roles.add(adminRole);
+
+            User admin = new User();
+            admin.setFullName("Admin");
+            admin.setEmail("admin@garden.com");
+            admin.setPassword("admin@admin1");
+            admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
+            admin.setPhone("000");
+            admin.setRoles(roles);
+
+            this.userRepository.save(admin);
+        }
     }
 }
