@@ -13,7 +13,7 @@ const ProductsContainer = styled.div`
     background-size: cover;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     /* border: 2px solid ${(props) => props.theme.palette.main}; */
     grid-gap: 20px;
     padding: 20px;
@@ -33,14 +33,14 @@ const ProductsContainer = styled.div`
 
 const Products = ({ products }) => (
     <ProductsContainer>
-        {products.map((p) => (
-            <Product
-                key={uuid()}
-                productName={p.productName}
-                description={p.description}
-                price={p.price}
-            />
-        ))}
+        {products
+            ? products.map((product) => (
+                  <Product
+                      key={uuid()}
+                      product={product}
+                  />
+              ))
+            : null}
     </ProductsContainer>
 );
 

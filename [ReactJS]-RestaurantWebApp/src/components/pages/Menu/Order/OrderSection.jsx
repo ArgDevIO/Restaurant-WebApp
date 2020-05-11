@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { removeProductFromBag } from '../../../../redux/bag/actions';
 import { getIsLoggedIn } from '../../../../redux/auth/reducer';
 import Button from '../../../Button/Button';
+import NumericInput from '../../../NumericInput/NumericInput';
 
 const StyledOrder = styled.div`
     background-color: ${(props) => props.theme.palette.main};
@@ -42,10 +43,12 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
             {bagItems.map((bagItem, index) => {
                 return (
                     <>
-                        <h4>{bagItem}</h4>
+                        <h4>{bagItem.name}</h4>
+                        <h4>{bagItem.price}</h4>
                         <button onClick={() => removeItemFromBag(index)}>
                             x
                         </button>
+                        <NumericInput value={1} min={0} max={10} />
                     </>
                 );
             })}

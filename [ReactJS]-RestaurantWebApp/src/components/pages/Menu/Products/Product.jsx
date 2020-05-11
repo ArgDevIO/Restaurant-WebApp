@@ -78,15 +78,13 @@ const AddToBagAndFavWrapper = styled.div`
 `;
 
 const Product = ({
-    productName,
-    description,
-    price,
+    product,
     addProductToBag,
     isLoggedIn,
 }) => {
     const history = useHistory();
 
-    const handleAddToBag = (productName) => {
+    const handleAddToBag = (product) => {
         // if (!isLoggedIn) {
         //     // history.push('/login');
         //     history.push({
@@ -94,26 +92,26 @@ const Product = ({
         //         state: { from: '/menu' },
         //     });
         // }
-        addProductToBag(productName);
+        addProductToBag(product);
     };
 
     return (
         <StyledProduct>
-            <ProductName>{productName}</ProductName>
+            <ProductName>{product.name}</ProductName>
             <LineBreak />
-            <Description>{description}</Description>
+            <Description>{product.description}</Description>
             <LineBreak />
             <ServingWrapper>
                 <Serving>Serving</Serving>
                 <NumericInput value={0} min={0} max={5} />
             </ServingWrapper>
             <AddToBagAndFavWrapper>
-                <Button fullWidth onClick={() => handleAddToBag(productName)}>
+                <Button fullWidth onClick={() => handleAddToBag(product)}>
                     <div>
                         <FaShoppingBag size={18} /> Add to bag
                     </div>
                 </Button>
-                <span>{price} den</span>
+                <span>{product.price} den</span>
                 <FavIcon />
             </AddToBagAndFavWrapper>
         </StyledProduct>
