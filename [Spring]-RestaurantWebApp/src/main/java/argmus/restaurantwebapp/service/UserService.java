@@ -6,7 +6,7 @@ import argmus.restaurantwebapp.model.User;
 
 public interface UserService {
 
-    User saveUser(User newUser);
+    User registerUser(User newUser, String role);
 
     User getUserById(Long userId);
 

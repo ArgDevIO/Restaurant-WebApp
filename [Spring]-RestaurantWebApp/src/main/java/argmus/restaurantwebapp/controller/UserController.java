@@ -50,7 +50,18 @@ public class UserController {
         ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
         if (errorMap != null) return errorMap;
 
-        return new ResponseEntity<>(this.userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.userService.registerUser(user, "ROLE_USER"), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register/employee")
+    public ResponseEntity<?> registerEmployee(@Valid @RequestBody User user, BindingResult result) {
+        // Validate passwords match
+        userValidator.validate(user, result);
+
+        ResponseEntity<?> errorMap = this.mapValidationErrorService.MapValidationError(result);
+        if (errorMap != null) return errorMap;
+
+        return new ResponseEntity<>(this.userService.registerUser(user, "ROLE_EMPLOYEE"), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
