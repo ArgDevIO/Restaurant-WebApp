@@ -10,7 +10,7 @@ Designed & developed by:
 
 -**Restaurant WebApp** is a Full Stack WebApp mainly used for online food ordering, inspired by the lack of this kind of systems in our city and the poor user experience while ordering food by phone calls which leads to a ton of incorrect orders and unhappy customers...
 ### App Features:
-- Authentication
+- Authentication (JWT)
 	- e-mail
 	- facebook
 - Multilanguage 
@@ -36,10 +36,13 @@ Designed & developed by:
 	- [Spring WebSocket](https://spring.io/guides/gs/messaging-stomp-websocket/)
 	- [JWT](https://jwt.io/)
 	- [MySQL](https://www.mysql.com/)
+	- [Google Maps](https://developers.google.com/maps/documentation)
 	- [Twilio](https://www.twilio.com/)   
 
 - **Frontend**:
 	- [ReactJS](https://reactjs.org/) 
+	- [React Hooks](https://reactjs.org/docs/hooks-intro.html)
+	- React Router
 	- [Redux](https://redux.js.org/)
 	- [Styled-Components](https://styled-components.com/)
 	- [Formik](https://jaredpalmer.com/formik/)
