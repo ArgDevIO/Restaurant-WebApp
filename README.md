@@ -124,7 +124,7 @@ cd [ReactJS]-RestaurantWebApp
 
 ```
 
-Then type the following command to install the dependencies and start the application -
+Then type the following command to install the dependencies and start the application
 
 ```bash
 
@@ -134,7 +134,7 @@ yarn install && yarn start
 
   
 
-The front-end server will start on port `3000`.
+The front-end server will start on port **3000**.
 
 ## Support
 Since this app is still not fully completed for production and we're still working on it, you may face some problems while trying to run this app, if that happens, please contact us at anytime:
