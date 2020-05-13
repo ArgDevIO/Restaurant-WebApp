@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import uuid from 'uuid/dist/v4';
 import MenuBackground from '../../../../assets/images/food-eggs-breakfast-fried-egg-egg-meal-614325-wallhere.com.png';
 import Product from './Product';
+import { getBagProducts } from '../../../../redux/bag/reducer';
+import { connect } from 'react-redux';
 
 const ProductsContainer = styled.div`
     /* grid-area: products; */
@@ -31,17 +33,29 @@ const ProductsContainer = styled.div`
     box-shadow: -1px -1px 11px 6px rgba(177,224,201,0.37);
 `;
 
-const Products = ({ products }) => (
-    <ProductsContainer>
-        {products
-            ? products.map((product) => (
-                  <Product
-                      key={uuid()}
-                      product={product}
-                  />
-              ))
-            : null}
-    </ProductsContainer>
-);
+const Products = ({ products, bagItems }) => {
+    return (
+        <ProductsContainer>
+            {products
+                ? products.map((product) => {
+                      const disabledButton = bagItems.some(
+                          (bagItem) => bagItem.name === product.name
+                      );
+                      return (
+                          <Product
+                              disabledButton={disabledButton}
+                              key={uuid()}
+                              product={product}
+                          />
+                      );
+                  })
+                : null}
+        </ProductsContainer>
+    );
+};
 
-export default Products;
+const mapStateToProps = (state) => ({
+    bagItems: getBagProducts(state),
+});
+
+export default connect(mapStateToProps, null)(Products);

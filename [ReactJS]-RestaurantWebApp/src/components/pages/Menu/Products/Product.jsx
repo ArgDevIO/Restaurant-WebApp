@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { LineBreak } from '../../../Footer/Footer';
 import NumericInput from '../../../NumericInput/NumericInput';
@@ -77,13 +77,7 @@ const AddToBagAndFavWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const Product = ({
-    product,
-    addProductToBag,
-    isLoggedIn,
-}) => {
-    const history = useHistory();
-
+const Product = ({ product, addProductToBag, disabledButton, isLoggedIn }) => {
     const handleAddToBag = (product) => {
         // if (!isLoggedIn) {
         //     // history.push('/login');
@@ -92,6 +86,8 @@ const Product = ({
         //         state: { from: '/menu' },
         //     });
         // }
+        product.totalPrice = product.price;
+        product.quantity = 1;
         addProductToBag(product);
     };
 
@@ -103,10 +99,14 @@ const Product = ({
             <LineBreak />
             <ServingWrapper>
                 <Serving>Serving</Serving>
-                <NumericInput value={0} min={0} max={5} />
+                {/* <NumericInput value={0} min={0} max={5} /> */}
             </ServingWrapper>
             <AddToBagAndFavWrapper>
-                <Button fullWidth onClick={() => handleAddToBag(product)}>
+                <Button
+                    disabled={disabledButton}
+                    fullWidth
+                    onClick={() => handleAddToBag(product)}
+                >
                     <div>
                         <FaShoppingBag size={18} /> Add to bag
                     </div>
