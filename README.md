@@ -114,8 +114,7 @@ After successfully running the spring boot app, it will automatically create the
 
 Any new user who registers to the app is assigned the `ROLE_USER` by default.
 
-> If you don't have `mvn` installed, you can also open the
-> **[Spring]-RestaurantWebApp** as a project on your **IDE** and run it from there
+> You can also open the **[Spring]-RestaurantWebApp** as a project on your **IDE** and run it from there
 
 ## Steps to Setup the React Front end app ([ReactJS]-RestaurantWebApp)
 
