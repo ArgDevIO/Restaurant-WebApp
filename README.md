@@ -1,12 +1,13 @@
 
 
 
+
 # Restaurant WebApp
 
 ## About
 ***Project work for Web Programming course, [FCSE](https://finki.ukim.mk/en), Skopje*** 
 
-Designed & developed by:
+Developed & designed by:
  - **Argetim Ramadani** (*161553*) - GitHub account: [ArgDevIO ](https://github.com/ArgDevIO) 
  - **Musli Ademi** (*151540*) - GitHub account: [mustran ](https://github.com/mustran)
 
@@ -51,6 +52,10 @@ Designed & developed by:
 	
 - **DevOps**:
 	- [Docker](https://www.docker.com/) 
+	
+- **Product Design**:
+	- [AdobeXD](https://www.adobe.com/products/xd.html)
+	- [Adobe illustrator](https://www.adobe.com/products/illustrator.html)
 
 ## Prerequisites to run this app
 - Java 11>
