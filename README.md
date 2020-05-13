@@ -42,7 +42,7 @@ Designed & developed by:
 - **Frontend**:
 	- [ReactJS](https://reactjs.org/) 
 	- [React Hooks](https://reactjs.org/docs/hooks-intro.html)
-	- React Router
+	- [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
 	- [Redux](https://redux.js.org/)
 	- [Styled-Components](https://styled-components.com/)
 	- [Formik](https://jaredpalmer.com/formik/)
