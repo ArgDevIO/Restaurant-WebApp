@@ -6,6 +6,7 @@ import SidebarItem from './SidebarItem';
 import { getActiveCategory } from '../../../../redux/products/reducer';
 import { setActiveCategory } from '../../../../redux/products/actions';
 import { connect } from 'react-redux';
+import { getCategories } from '../../../../redux/categories/reducer';
 
 // const categories = [
 //     { category: 'Breakfast' },
@@ -61,6 +62,12 @@ const ArrowContainer = styled.div`
 const Sidebar = ({ categories, active, setActiveCategory }) => {
     // const types = categories.map((cat) => cat.category);
 
+    let activeCategory = '';
+    if (categories.length !== 0 && active === '') {
+        activeCategory = categories[0].name;
+        setActiveCategory(activeCategory);
+    }
+
     return (
         <SidebarStyles>
             {/* <ArrowContainer>
@@ -69,10 +76,13 @@ const Sidebar = ({ categories, active, setActiveCategory }) => {
             <SidebarContainer>
                 {categories.map((category) => (
                     <SidebarItem
-                        category={category}
+                        category={category.name}
+                        categoryId={category.id}
                         key={uuid()}
-                        setActiveCategory={() => setActiveCategory(category)}
-                        active={active === category}
+                        setActiveCategory={() =>
+                            setActiveCategory(category.name)
+                        }
+                        active={active === category.name}
                     />
                 ))}
             </SidebarContainer>
@@ -85,6 +95,7 @@ const Sidebar = ({ categories, active, setActiveCategory }) => {
 
 const mapStateToProps = (state) => ({
     active: getActiveCategory(state),
+    categories: getCategories(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

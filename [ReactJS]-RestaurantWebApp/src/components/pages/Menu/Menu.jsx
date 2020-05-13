@@ -13,6 +13,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { getCategories } from '../../../redux/categories/reducer';
 import { fetchCategories } from '../../../redux/categories/fetchCategories';
+import { fetchProductsByCategory } from '../../../redux/products/fetchProducts';
+import { setActiveCategory } from '../../../redux/products/actions';
 
 const Wrapper = styled.div`
     /* background-color: red; */
@@ -43,74 +45,21 @@ const ProductsAndOrderWrapper = styled.div`
     }
 `;
 
-const products = [
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-    {
-        product: 'Garden breakfast',
-        description:
-            '2 fried eggs, 2 chicken sausages, white cheese, cucumber, tomatoes, olives, honey',
-    },
-];
-
 const Menu = ({ products, categories, fetchCategories }) => {
     useEffect(() => {
         console.log('USE EFFECT HERE');
         fetchCategories();
-    }, []);
-    console.log(categories);
-    const categoriesArray = categories.map((cat) => cat.name);
+    }, [fetchCategories]);
 
-    console.log('ONLY CATEGORIES');
-    console.log(categoriesArray);
     return (
         <>
             <LineBreak top={20} bottom={10} />
             <>
                 <Wrapper>
-                    <Sidebar categories={categoriesArray}/>
+                    <Sidebar categories={categories} />
                     <ProductsAndOrderWrapper>
                         <Products products={products} />
                         <OrderSection />
-                        {/* <button onClick={logOut}>Log out!</button> */}
                     </ProductsAndOrderWrapper>
                 </Wrapper>
             </>

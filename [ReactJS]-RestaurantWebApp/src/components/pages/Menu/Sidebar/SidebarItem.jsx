@@ -5,6 +5,7 @@ import CategoryLogo from '../../../../assets/images/breakfast-icon-png.png';
 import colors from '../../../../theme/colors';
 import { fetchDynamicProducts } from '../../../../redux/products/actions';
 import { connect } from 'react-redux';
+import { fetchProductsByCategory } from '../../../../redux/products/fetchProducts';
 
 const SidebarLogo = styled.img`
     height: 60px;
@@ -24,17 +25,18 @@ const ListItemsContainer = styled.li`
 
 const SidebarItem = ({
     category,
-    getProducts,
+    categoryId,
+    getProductsById,
     setActiveCategory,
     active,
 }) => {
-    const handleOnClick = (product) => {
-        getProducts(product);
+    const handleOnClick = () => {
+        getProductsById(categoryId);
         setActiveCategory();
     };
 
     return (
-        <ListItemsContainer onClick={() => handleOnClick(category)}>
+        <ListItemsContainer onClick={() => handleOnClick()}>
             <SidebarLogo
                 src={active ? ActiveCategoryLogo : CategoryLogo}
                 alt={category}
@@ -45,7 +47,8 @@ const SidebarItem = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getProducts: (categoryType) => dispatch(fetchDynamicProducts(categoryType)),
+    getProductsById: (categoryId) =>
+        dispatch(fetchProductsByCategory(categoryId)),
 });
 
 export default connect(null, mapDispatchToProps)(SidebarItem);

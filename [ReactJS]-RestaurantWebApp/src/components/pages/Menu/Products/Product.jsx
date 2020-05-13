@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { LineBreak } from '../../../Footer/Footer';
 import NumericInput from '../../../NumericInput/NumericInput';
@@ -77,16 +77,8 @@ const AddToBagAndFavWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const Product = ({
-    productName,
-    description,
-    price,
-    addProductToBag,
-    isLoggedIn,
-}) => {
-    const history = useHistory();
-
-    const handleAddToBag = (productName) => {
+const Product = ({ product, addProductToBag, disabledButton, isLoggedIn }) => {
+    const handleAddToBag = (product) => {
         // if (!isLoggedIn) {
         //     // history.push('/login');
         //     history.push({
@@ -94,26 +86,32 @@ const Product = ({
         //         state: { from: '/menu' },
         //     });
         // }
-        addProductToBag(productName);
+        product.totalPrice = product.price;
+        product.quantity = 1;
+        addProductToBag(product);
     };
 
     return (
         <StyledProduct>
-            <ProductName>{productName}</ProductName>
+            <ProductName>{product.name}</ProductName>
             <LineBreak />
-            <Description>{description}</Description>
+            <Description>{product.description}</Description>
             <LineBreak />
             <ServingWrapper>
                 <Serving>Serving</Serving>
-                <NumericInput value={0} min={0} max={5} />
+                {/* <NumericInput value={0} min={0} max={5} /> */}
             </ServingWrapper>
             <AddToBagAndFavWrapper>
-                <Button fullWidth onClick={() => handleAddToBag(productName)}>
+                <Button
+                    disabled={disabledButton}
+                    fullWidth
+                    onClick={() => handleAddToBag(product)}
+                >
                     <div>
                         <FaShoppingBag size={18} /> Add to bag
                     </div>
                 </Button>
-                <span>{price} den</span>
+                <span>{product.price} den</span>
                 <FavIcon />
             </AddToBagAndFavWrapper>
         </StyledProduct>
