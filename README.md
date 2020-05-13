@@ -4,7 +4,7 @@
 # Restaurant WebApp
 
 ## About
-***Project work for Web Programming course, [FCSE](https://finki.ukim.mk/en)***   
+***Project work for Web Programming course, [FCSE](https://finki.ukim.mk/en), Skopje*** 
 
 Designed & developed by:
  - **Argetim Ramadani** (*161553*) - GitHub account: [ArgDevIO ](https://github.com/ArgDevIO) 
