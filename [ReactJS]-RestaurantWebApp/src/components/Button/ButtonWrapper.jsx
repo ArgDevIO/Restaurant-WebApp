@@ -22,8 +22,8 @@ const ButtonWrapper = styled.button`
     ${(props) =>
         props.disabled
             ? css`
-      color: ${({ theme }) => theme.palette.text.light}
-      background-color: ${colors.lightGray};
+      color: black;
+      background-color: ${colors.green};
       border-color: ${colors.gray};
       pointer-events: none;
     `
