@@ -83,7 +83,7 @@ cd \[Spring\]-RestaurantWebApp
 
 2.  **Run docker container**
 
-This commands starts the docker container in the background so we can continue using the same terminal window
+This commands starts the docker container in the background so you can continue using the same terminal window
 ```bash
 
 docker-compose up -d # This will start the mysql image on port 3306
@@ -105,6 +105,8 @@ You can run the spring boot app by typing the following command
 mvn spring-boot:run
 
 ```
+> You can also open the **[Spring]-RestaurantWebApp** as a project on your **IDE** and run it from there
+
 The server will start on port **8080**.
 
 After successfully running the spring boot app, it will automatically create the default Admin user with role `ROLE_ADMIN` 
@@ -113,8 +115,6 @@ After successfully running the spring boot app, it will automatically create the
 	- passw: `admin@admin1` 
 
 Any new user who registers to the app is assigned the `ROLE_USER` by default.
-
-> You can also open the **[Spring]-RestaurantWebApp** as a project on your **IDE** and run it from there
 
 ## Steps to Setup the React Front end app ([ReactJS]-RestaurantWebApp)
 
