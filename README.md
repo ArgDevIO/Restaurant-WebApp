@@ -1,5 +1,6 @@
 
 
+
 # Restaurant WebApp
 
 ## About
@@ -134,3 +135,8 @@ yarn install && yarn start
   
 
 The front-end server will start on port `3000`.
+
+## Support
+Since this app is still not fully completed for production and we're still working on it, you may face some problems while trying to run this app, if that happens, please contact us at anytime:
+- Argetim Ramadani: argetim.ramadani@students.finki.ukim.mk
+- Musli Ademi: musli.ademi@students.finki.ukim.mk
