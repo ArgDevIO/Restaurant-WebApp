@@ -22,6 +22,8 @@
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "sockjs-client": "^1.4.0",
+    "stomp-websocket": "^2.3.4-next",
     "styled-components": "^5.0.1",
     "uuid": "^8.0.0",
     "yup": "^0.28.5"

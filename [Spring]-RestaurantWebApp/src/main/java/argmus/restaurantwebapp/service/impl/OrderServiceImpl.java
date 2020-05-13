@@ -8,6 +8,7 @@ import argmus.restaurantwebapp.repository.*;
 import argmus.restaurantwebapp.security.JwtTokenProvider;
 import argmus.restaurantwebapp.service.OrderService;
 import com.google.gson.JsonObject;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +26,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderProductRepository orderProductRepository;
     private final AddressRepository addressRepository;
 
+    private final SimpMessagingTemplate template;
+
     private final JwtTokenProvider jwtTokenProvider;
 
-    public OrderServiceImpl(UserRepository userRepository, MenuProductRepository menuProductRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository, AddressRepository addressRepository, JwtTokenProvider jwtTokenProvider) {
+    public OrderServiceImpl(UserRepository userRepository, MenuProductRepository menuProductRepository, OrderRepository orderRepository, OrderProductRepository orderProductRepository, AddressRepository addressRepository, SimpMessagingTemplate template, JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.menuProductRepository = menuProductRepository;
         this.orderRepository = orderRepository;
         this.orderProductRepository = orderProductRepository;
         this.addressRepository = addressRepository;
+        this.template = template;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -67,12 +71,19 @@ public class OrderServiceImpl implements OrderService {
 
         this.orderProductRepository.saveAll(orderProducts);
 
-        newOrder.setOrderProducts(null);
         newOrder.getUser().setPassword(null);
         newOrder.getUser().setConfirmPassword(null);
         newOrder.getUser().setAddresses(null);
         newOrder.getUser().setRoles(null);
-        return newOrder;
+        newOrder.setOrderProducts(null);
+
+        List<Order> tempOrderList = new ArrayList<>();
+        tempOrderList.add(newOrder);
+
+        List<Order> formattedOrders = formatOrders(tempOrderList);
+        template.convertAndSend("/orders/new", formattedOrders.get(0));
+
+        return formattedOrders.get(0);
     }
 
     @Override

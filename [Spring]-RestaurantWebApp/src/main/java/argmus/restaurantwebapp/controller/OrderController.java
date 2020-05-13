@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class OrderController {
     }
 
     @PostMapping("/new")
+    @SendTo("/users/new")
     public ResponseEntity<?> newOrder(@RequestBody String jsonString) {
         JsonObject jsonOrder = JsonParser.parseString(jsonString).getAsJsonObject();
 

@@ -54,6 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
+                .antMatchers("/websocket-test").permitAll()
+                .antMatchers("/websocket-test/**").permitAll()
+
                 // Users
                 .antMatchers(HttpMethod.POST, "/api/users/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/users/register/employee").hasRole("ADMIN")
