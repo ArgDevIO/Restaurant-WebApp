@@ -12,7 +12,8 @@ import NumericInput from '../../../NumericInput/NumericInput';
 
 const StyledOrder = styled.div`
     background-color: ${(props) => props.theme.palette.main};
-    width: 323px;
+    width: fit-content;
+    min-width: 323px;
     height: fit-content;
     border-radius: 10px;
     /* grid-area: orderSection; */
@@ -24,6 +25,15 @@ const StyledOrder = styled.div`
 const YourOrder = styled.h2`
     color: white;
 `;
+
+const OrderItem = styled.div`
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center;
+    margin-bottom: 5px;
+`;
+
+const OrderItemWrapper = styled.div``;
 
 const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
     const history = useHistory();
@@ -42,14 +52,32 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
             </YourOrder>
             {bagItems.map((bagItem, index) => {
                 return (
-                    <>
-                        <h4>{bagItem.name}</h4>
-                        <h4>{bagItem.price}</h4>
-                        <button onClick={() => removeItemFromBag(index)}>
-                            x
-                        </button>
-                        <NumericInput value={1} min={0} max={10} />
-                    </>
+                    <OrderItem>
+                        <span>{bagItem.name}</span>
+                        &nbsp;
+                        <span>
+                            {bagItem.price} x {bagItem.quantity} ={' '}
+                            {bagItem.totalPrice}
+                        </span>
+                        &nbsp;
+                        <OrderItemWrapper
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <NumericInput
+                                color="black"
+                                bagItem={bagItem}
+                                value={1}
+                                min={1}
+                                max={10}
+                            />
+                            <button onClick={() => removeItemFromBag(index)}>
+                                x
+                            </button>
+                        </OrderItemWrapper>
+                    </OrderItem>
                 );
             })}
             {/* <Link to="/login"> */}
