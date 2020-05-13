@@ -115,7 +115,7 @@ Any new user who registers to the app is assigned the `ROLE_USER` by default.
 
   
 
-First go to the `[ReactJS]-RestaurantWebApp` folder -
+First go to the `[ReactJS]-RestaurantWebApp` folder
 
 ```bash
 
