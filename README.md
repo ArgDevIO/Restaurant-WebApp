@@ -1,4 +1,5 @@
 
+
 # Restaurant WebApp
 
 ## About
@@ -49,3 +50,87 @@ Designed & developed by:
 	
 - **DevOps**:
 	- [Docker](https://www.docker.com/) 
+
+## Prerequisites to run this app
+- Java 11>
+- Docker
+- mvn or IDE
+- Yarn
+
+## Steps to Setup the Spring Boot Back end app ([Spring]-RestaurantWebApp)
+
+  
+
+1.  **Clone the application**
+
+  
+
+```bash
+
+git clone https://github.com/ArgDevIO/Restaurant-WebApp.git
+
+cd \[Spring\]-RestaurantWebApp
+
+```
+
+  
+
+2.  **Run docker container**
+
+This commands starts the docker container in the background so we can continue using the same terminal window
+```bash
+
+docker-compose up -d # This will start the mysql image on port 3306
+
+```
+To stop & remove the above started container and images use this command
+```bash
+docker-compose down
+```
+
+4.  **Run the app**
+
+  
+
+You can run the spring boot app by typing the following command
+
+```bash
+
+mvn spring-boot:run
+
+```
+The server will start on port **8080**.
+
+After successfully running the spring boot app, it will automatically create the default Admin user with role `ROLE_ADMIN` 
+- Admin, default credentials:
+	- email:   `admin@garden.com`
+	- passw: `admin@admin1` 
+
+Any new user who registers to the app is assigned the `ROLE_USER` by default.
+
+> If you don't have `mvn` installed, you can also open the
+> **[Spring]-RestaurantWebApp** as a project on your **IDE** and run it from there
+
+## Steps to Setup the React Front end app ([ReactJS]-RestaurantWebApp)
+
+  
+
+First go to the `[ReactJS]-RestaurantWebApp` folder -
+
+```bash
+
+cd [ReactJS]-RestaurantWebApp
+
+```
+
+Then type the following command to install the dependencies and start the application -
+
+```bash
+
+yarn install && yarn start
+
+```
+
+  
+
+The front-end server will start on port `3000`.
