@@ -14,18 +14,19 @@ Developed & designed by:
 -**Restaurant WebApp** is a Full Stack WebApp mainly used for online food ordering, inspired by the lack of this kind of systems in our country and the poor user experience while ordering food by phone calls which leads to a ton of incorrect orders and unhappy customers...
 ### App Features:
 - Authentication (JWT)
-	- e-mail
+	- e-mail ✔️
 	- facebook
 - Multilanguage 
-- OTP phone verification  
+- OTP phone verification ✔️  
 - Precise user delivery address, using Map coordinates
 - Delivery cost calculation
-- Online food menu
-- Online ordering
+- Online food menu ✔️
+- Online ordering ✔️
 - Online payment gateway
 - Real time order tracking
 - Online booking/reservations
-- Loyalty program
+- Menu Categories & Products CRUD ✔️
+- Users CRUD ✔️
 - Admin panel
 - Employee panel
 - User panel
