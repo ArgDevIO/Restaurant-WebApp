@@ -106,6 +106,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object sendCode(String phone) {
+        // Check if current phone has already requested a code, if yes, delete it and send a new one
+        // This enables this same method also for resending a code
+        OTP otp = this.otpRepository.findOTPByPhone(phone);
+        if (otp != null)
+            this.otpRepository.delete(otp);
+
         String ACCOUNT_SID = "AC4d96225dbb8ef4ebcc7e384bf0e4c9c8";
         String AUTH_TOKEN = "6794028751aea00e942017ba577fee12";
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
@@ -116,18 +122,19 @@ public class UserServiceImpl implements UserService {
         String text = "--GardenWebApp--\nYour verification code is: ";
 
         try {
+            // Temp save phone/code to db
+            this.otpRepository.save(new OTP(phone, otp_code));
+
             Message.creator(
                     new PhoneNumber("+389" + phone.substring(1)),
                     new PhoneNumber("+15312042573"),
                     (text + otp_code))
                     .create();
         } catch (Exception e) {
-            returnObj.put("message", e.getMessage().replace("'To'", ""));
+            returnObj.put("message", e.getMessage().contains("'To'") ? e.getMessage().replace("'To'", "") : e.getMessage());
             return returnObj;
         }
 
-        // Temp save phone/code to db
-        this.otpRepository.save(new OTP(phone, otp_code));
         returnObj.put("message", "Sent");
         return returnObj;
     }
@@ -135,22 +142,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object verifyCode(String phone, int code) {
         Map<String, String> returnObj = new HashMap<>();
-        OTP otp_code = this.otpRepository.findOTPByPhone(phone);
+        OTP otp = this.otpRepository.findOTPByPhone(phone);
 
         Date now = new Date();
 
-        if (otp_code == null) {
+        if (otp == null) {
             returnObj.put("message", "Can't find code for this number: " + phone);
             return returnObj;
-        } else if (otp_code.getCode() != code) {
+        } else if (otp.getCode() != code) {
             returnObj.put("message", "Incorrect code, try again!");
             return returnObj;
-        } else if (otp_code.getExpiryDateTime().before(now)) {
-            this.otpRepository.delete(otp_code);
+        } else if (otp.getExpiryDateTime().before(now)) {
+            this.otpRepository.delete(otp);
             returnObj.put("message", "Code has expired, try sending a new one again");
             return returnObj;
         }
-        this.otpRepository.delete(otp_code);
+        this.otpRepository.delete(otp);
         returnObj.put("message", "Successfully verified");
         return returnObj;
     }
