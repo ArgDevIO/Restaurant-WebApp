@@ -56,6 +56,10 @@ const LineStyles = styled.div`
 const ForgotPassword = styled(Link)`
     color: white;
 `;
+const CustomLink = styled(Link)`
+    color: ${({ color, theme }) => color || theme.palette.main};
+`;
+
 const logInInitialValues = {
     email: '',
     password: '',
@@ -100,9 +104,7 @@ const LogIn = (props) => {
             <Formik
                 initialValues={logInInitialValues}
                 validationSchema={logInValidationSchema}
-                onSubmit={({ email, password }) =>
-                    handleSubmit(email, password)
-                }
+                onSubmit={({ email, password }) => handleSubmit(email, password)}
             >
                 <LoginFormContainer>
                     <Form>
@@ -134,12 +136,19 @@ const LogIn = (props) => {
                                 type="password"
                                 id="password"
                             />
+                            <br />
                             <Button type="submit" fullWidth>
                                 Login
                             </Button>
-                            <ForgotPassword to="/forgot-password">
+                            <br />
+                            <CustomLink color="white" to="/forgot-password">
                                 Forgot password?
-                            </ForgotPassword>
+                            </CustomLink>
+                            <br />
+                            <br />
+                            <CustomLink color="white" to="/register">
+                                Do not have an account? Register here
+                            </CustomLink>
                         </LoginWrapper>
                     </Form>
                 </LoginFormContainer>
@@ -154,8 +163,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loginUser: (email, password) =>
-        dispatch(fetchAuthUserData(email, password)),
+    loginUser: (email, password) => dispatch(fetchAuthUserData(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
