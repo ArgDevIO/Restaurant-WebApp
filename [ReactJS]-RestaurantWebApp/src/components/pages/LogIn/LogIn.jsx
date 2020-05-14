@@ -18,14 +18,14 @@ import { Formik, Form } from 'formik';
 import FormikTextInput from '../../../formik/FormikTextInput';
 import { Link } from 'react-router-dom';
 
-const LoginContainer = styled.div`
+export const RegisterOrLoginContainer = styled.div`
     display: grid;
     place-items: center;
     /* grid-template-columns: minmax(441px, 1fr); */
     height: 80%;
 `;
 
-const LoginFormContainer = styled.div`
+export const RegisterOrLoginFormContainer = styled.div`
     height: fit-content;
     width: 441px;
     background: ${colors.backgroundColor};
@@ -33,7 +33,7 @@ const LoginFormContainer = styled.div`
     box-shadow: 0px 3px 6px #00000029;
 `;
 
-const LoginWrapper = styled.div`
+export const RegisterOrLoginWrapper = styled.div`
     width: 80%;
     margin: 10% auto 10% auto;
 `;
@@ -100,15 +100,15 @@ const LogIn = (props) => {
     };
 
     return (
-        <LoginContainer>
+        <RegisterOrLoginContainer>
             <Formik
                 initialValues={logInInitialValues}
                 validationSchema={logInValidationSchema}
                 onSubmit={({ email, password }) => handleSubmit(email, password)}
             >
-                <LoginFormContainer>
+                <RegisterOrLoginFormContainer>
                     <Form>
-                        <LoginWrapper>
+                        <RegisterOrLoginWrapper>
                             <LoginHeader>Login to place orders</LoginHeader>
                             <Button type="button" color={colors.navy} fullWidth>
                                 <FaFacebookF
@@ -149,11 +149,11 @@ const LogIn = (props) => {
                             <CustomLink color="white" to="/register">
                                 Do not have an account? Register here
                             </CustomLink>
-                        </LoginWrapper>
+                        </RegisterOrLoginWrapper>
                     </Form>
-                </LoginFormContainer>
+                </RegisterOrLoginFormContainer>
             </Formik>
-        </LoginContainer>
+        </RegisterOrLoginContainer>
     );
 };
 
