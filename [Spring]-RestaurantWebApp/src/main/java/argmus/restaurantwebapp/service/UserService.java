@@ -13,4 +13,8 @@ public interface UserService {
     Address newAddressToUser(Long userId, Address address, String token);
 
     void initAdmin(Role admin);
+
+    Object sendCode(String phone);
+
+    Object verifyCode(String phone, int code);
 }
