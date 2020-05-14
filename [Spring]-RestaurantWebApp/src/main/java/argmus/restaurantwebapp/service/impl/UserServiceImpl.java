@@ -3,19 +3,23 @@ package argmus.restaurantwebapp.service.impl;
 import argmus.restaurantwebapp.exception.UserDoesntExistException;
 import argmus.restaurantwebapp.exception.UserEmailAlreadyExistsException;
 import argmus.restaurantwebapp.model.Address;
+import argmus.restaurantwebapp.model.OTP;
 import argmus.restaurantwebapp.model.Role;
 import argmus.restaurantwebapp.model.User;
 import argmus.restaurantwebapp.repository.AddressRepository;
+import argmus.restaurantwebapp.repository.OTPRepository;
 import argmus.restaurantwebapp.repository.RoleRepository;
 import argmus.restaurantwebapp.repository.UserRepository;
 import argmus.restaurantwebapp.security.JwtTokenProvider;
 import argmus.restaurantwebapp.service.UserService;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static argmus.restaurantwebapp.security.SecurityConstants.TOKEN_PREFIX;
 
@@ -27,13 +31,15 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final OTPRepository otpRepository;
 
-    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenProvider jwtTokenProvider) {
+    public UserServiceImpl(UserRepository userRepository, AddressRepository addressRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, JwtTokenProvider jwtTokenProvider, OTPRepository otpRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.otpRepository = otpRepository;
     }
 
     @Override
@@ -96,5 +102,63 @@ public class UserServiceImpl implements UserService {
 
             this.userRepository.save(admin);
         }
+    }
+
+    @Override
+    public Object sendCode(String phone) {
+        String ACCOUNT_SID = "AC4d96225dbb8ef4ebcc7e384bf0e4c9c8";
+        String AUTH_TOKEN = "6794028751aea00e942017ba577fee12";
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Map<String, String> returnObj = new HashMap<>();
+
+        int otp_code = randomOTP();
+        String text = "--GardenWebApp--\nYour verification code is: ";
+
+        try {
+            Message.creator(
+                    new PhoneNumber("+389" + phone.substring(1)),
+                    new PhoneNumber("+15312042573"),
+                    (text + otp_code))
+                    .create();
+        } catch (Exception e) {
+            returnObj.put("message", e.getMessage().replace("'To'", ""));
+            return returnObj;
+        }
+
+        // Temp save phone/code to db
+        this.otpRepository.save(new OTP(phone, otp_code));
+        returnObj.put("message", "Sent");
+        return returnObj;
+    }
+
+    @Override
+    public Object verifyCode(String phone, int code) {
+        Map<String, String> returnObj = new HashMap<>();
+        OTP otp_code = this.otpRepository.findOTPByPhone(phone);
+
+        Date now = new Date();
+
+        if (otp_code == null) {
+            returnObj.put("message", "Can't find code for this number: " + phone);
+            return returnObj;
+        } else if (otp_code.getCode() != code) {
+            returnObj.put("message", "Incorrect code, try again!");
+            return returnObj;
+        } else if (otp_code.getExpiryDateTime().before(now)) {
+            this.otpRepository.delete(otp_code);
+            returnObj.put("message", "Code has expired, try sending a new one again");
+            return returnObj;
+        }
+        this.otpRepository.delete(otp_code);
+        returnObj.put("message", "Successfully verified");
+        return returnObj;
+    }
+
+    private int randomOTP() {
+        Random r = new Random();
+        int low = 11111;
+        int high = 99999;
+        return r.nextInt(high - low) + low;
     }
 }

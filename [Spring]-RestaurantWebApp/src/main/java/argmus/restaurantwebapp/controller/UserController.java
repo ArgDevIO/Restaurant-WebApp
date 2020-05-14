@@ -53,6 +53,17 @@ public class UserController {
         return new ResponseEntity<>(this.userService.registerUser(user, "ROLE_USER"), HttpStatus.CREATED);
     }
 
+    @PostMapping("/register/send-code")
+    public ResponseEntity<?> sendCode(@RequestParam String phone) {
+        return new ResponseEntity<>(this.userService.sendCode(phone), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register/verify-code")
+    public ResponseEntity<?> verifyCode(@RequestParam String phone,
+                                        @RequestParam int code) {
+        return new ResponseEntity<>(this.userService.verifyCode(phone, code), HttpStatus.CREATED);
+    }
+
     @PostMapping("/register/employee")
     public ResponseEntity<?> registerEmployee(@Valid @RequestBody User user, BindingResult result) {
         // Validate passwords match
