@@ -18,9 +18,13 @@ const StyledNavItem = styled(NavLink).attrs({ active })`
     }
 `;
 
+const itemOnClickHandler = (e, item) => {
+    if (item.disabled) e.preventDefault();
+};
+
 const NavItems = ({ items }) =>
     items.map((item) => (
-        <StyledNavItem to={item.to} key={uuid()}>
+        <StyledNavItem onClick={(e) => itemOnClickHandler(e, item)} to={item.to} key={uuid()}>
             {item.navLink}
         </StyledNavItem>
     ));
