@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const Base = styled.div`
     position: absolute;
-    ${({ width }) => width && `width: ${width} px;`}
-    ${({ width }) => width && `height: ${width} px;`}
+    ${({ width }) => width && `width: ${width}px;`}
+    ${({ width }) => width && `height: ${width}px;`}
     background: ${({ background, theme }) => background || theme.palette.main};
 `;
 
