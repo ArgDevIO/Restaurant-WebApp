@@ -93,10 +93,15 @@ const LogIn = (props) => {
     if (props.loading) return <p>Loading</p>;
 
     const handleSubmit = (email, password) => {
-        props.loginUser(email, password);
-        const pathToGo = props.location.state;
-        if (pathToGo === null) history.push('/menu');
-        history.push(pathToGo.from);
+        props.loginUser(email, password).then((response) => {
+            if (response) {
+                // const pathToGo = props.location.state;
+                // console.log("PATH TO GO: ", pathToGo);
+                // if (pathToGo === null) history.push('/menu');
+                // history.push(pathToGo.from);
+                history.push('/menu');
+            }
+        });
     };
 
     return (
