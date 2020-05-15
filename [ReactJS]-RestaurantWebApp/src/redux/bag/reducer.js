@@ -43,6 +43,7 @@ const bagReducer = (state = initialState, action) => {
             const updatedProductsDecrease = state.bagProducts.map((product) => {
                 if (product.name === action.payload.name) {
                     product.quantity -= 1;
+                    product.currentQuantity -= 1;
                     product.totalPrice = product.quantity * product.price;
                 }
                 return product;
