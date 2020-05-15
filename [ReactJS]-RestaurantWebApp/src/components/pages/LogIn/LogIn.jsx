@@ -18,14 +18,14 @@ import { Formik, Form } from 'formik';
 import FormikTextInput from '../../../formik/FormikTextInput';
 import { Link } from 'react-router-dom';
 
-const LoginContainer = styled.div`
+export const RegisterOrLoginContainer = styled.div`
     display: grid;
     place-items: center;
     /* grid-template-columns: minmax(441px, 1fr); */
     height: 80%;
 `;
 
-const LoginFormContainer = styled.div`
+export const RegisterOrLoginFormContainer = styled.div`
     height: fit-content;
     width: 441px;
     background: ${colors.backgroundColor};
@@ -33,7 +33,7 @@ const LoginFormContainer = styled.div`
     box-shadow: 0px 3px 6px #00000029;
 `;
 
-const LoginWrapper = styled.div`
+export const RegisterOrLoginWrapper = styled.div`
     width: 80%;
     margin: 10% auto 10% auto;
 `;
@@ -56,6 +56,10 @@ const LineStyles = styled.div`
 const ForgotPassword = styled(Link)`
     color: white;
 `;
+const CustomLink = styled(Link)`
+    color: ${({ color, theme }) => color || theme.palette.main};
+`;
+
 const logInInitialValues = {
     email: '',
     password: '',
@@ -89,24 +93,27 @@ const LogIn = (props) => {
     if (props.loading) return <p>Loading</p>;
 
     const handleSubmit = (email, password) => {
-        props.loginUser(email, password);
-        const pathToGo = props.location.state;
-        if (pathToGo === null) history.push('/menu');
-        history.push(pathToGo.from);
+        props.loginUser(email, password).then((response) => {
+            if (response) {
+                // const pathToGo = props.location.state;
+                // console.log("PATH TO GO: ", pathToGo);
+                // if (pathToGo === null) history.push('/menu');
+                // history.push(pathToGo.from);
+                history.push('/menu');
+            }
+        });
     };
 
     return (
-        <LoginContainer>
+        <RegisterOrLoginContainer>
             <Formik
                 initialValues={logInInitialValues}
                 validationSchema={logInValidationSchema}
-                onSubmit={({ email, password }) =>
-                    handleSubmit(email, password)
-                }
+                onSubmit={({ email, password }) => handleSubmit(email, password)}
             >
-                <LoginFormContainer>
+                <RegisterOrLoginFormContainer>
                     <Form>
-                        <LoginWrapper>
+                        <RegisterOrLoginWrapper>
                             <LoginHeader>Login to place orders</LoginHeader>
                             <Button type="button" color={colors.navy} fullWidth>
                                 <FaFacebookF
@@ -134,17 +141,24 @@ const LogIn = (props) => {
                                 type="password"
                                 id="password"
                             />
+                            <br />
                             <Button type="submit" fullWidth>
                                 Login
                             </Button>
-                            <ForgotPassword to="/forgot-password">
+                            <br />
+                            <CustomLink color="white" to="/forgot-password">
                                 Forgot password?
-                            </ForgotPassword>
-                        </LoginWrapper>
+                            </CustomLink>
+                            <br />
+                            <br />
+                            <CustomLink color="white" to="/register">
+                                Do not have an account? Register here
+                            </CustomLink>
+                        </RegisterOrLoginWrapper>
                     </Form>
-                </LoginFormContainer>
+                </RegisterOrLoginFormContainer>
             </Formik>
-        </LoginContainer>
+        </RegisterOrLoginContainer>
     );
 };
 
@@ -154,8 +168,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loginUser: (email, password) =>
-        dispatch(fetchAuthUserData(email, password)),
+    loginUser: (email, password) => dispatch(fetchAuthUserData(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn);

@@ -10,6 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute';
 import { getIsLoggedIn } from './redux/auth/reducer';
 import { connect } from 'react-redux';
 import LogIn from './components/pages/LogIn/LogIn';
+import Register from './components/pages/Register/Register';
 
 const AppWrapper = styled.div`
     width: 80%;
@@ -51,10 +52,11 @@ const App = ({ isLoggedIn }) => {
                     <Route
                         exact
                         path="/login"
-                        render={(props) => (
-                            <LogIn authenticated={isLoggedIn} {...props} />
-                        )}
+                        render={(props) => <LogIn authenticated={isLoggedIn} {...props} />}
                     />
+                    <Route exact path="/register">
+                        <Register />
+                    </Route>
                     <Route>
                         <PageNotFound />
                     </Route>
