@@ -73,7 +73,7 @@ const NumericInput = ({
     const [inputValue, setInputValue] = useState(value);
 
     const handleInc = (inputValue) => {
-        if (inputValue >= max) return;
+        if (bagItem.currentQuantity >= max) return;
         setInputValue(inputValue + 1);
         const productChanged = JSON.parse(JSON.stringify(bagItem));
         productChanged.quantity += 1;
@@ -81,10 +81,10 @@ const NumericInput = ({
     };
 
     const handleDec = (inputValue) => {
-        if (inputValue <= min) return;
+        if (bagItem.currentQuantity <= min) return;
         setInputValue(inputValue - 1);
         const productChanged = JSON.parse(JSON.stringify(bagItem));
-        productChanged.quantity += 1;
+        productChanged.quantity -= 1;
         decreaseProductQuantity(productChanged);
     };
 
@@ -93,7 +93,7 @@ const NumericInput = ({
             <NumericInputStyled
                 color={color}
                 type="number"
-                value={inputValue}
+                value={bagItem.currentQuantity}
                 min={min}
                 max={max}
                 onChange={() => null}
