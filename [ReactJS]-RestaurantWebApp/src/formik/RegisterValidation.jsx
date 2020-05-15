@@ -1,6 +1,7 @@
 import { object, string, ref, number } from 'yup';
 
 const phoneNumberPattern = /^(07[012578]\d{6}$)/;
+// atleast 8 characters and one digit
 const passwordPattern = /(?=\D*\d)\S{8,}$/;
 
 export const registerValidationSchema = object({
