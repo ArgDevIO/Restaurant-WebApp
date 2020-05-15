@@ -3,7 +3,6 @@ import {
     FETCH_DATA_PRELOAD,
     FETCH_DATA_SUCCESS,
     LOG_OUT_USER,
-    LOGIN_TOGGLER,
     LOGIN_USER,
 } from './actions';
 import jwt from 'jwt-decode';
@@ -44,11 +43,6 @@ const authReducer = (state = initialState, action) => {
         case LOG_OUT_USER:
             return {
                 ...state,
-            };
-        case LOGIN_TOGGLER:
-            return {
-                ...state,
-                isLoggedIn: !state.isLoggedIn,
             };
         default:
             return state;
