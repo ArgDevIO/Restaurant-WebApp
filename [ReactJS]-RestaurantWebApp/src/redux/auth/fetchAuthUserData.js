@@ -21,6 +21,7 @@ export const fetchAuthUserData = (email, password) => {
         } catch (e) {
             dispatch(fetchDataError());
             // show login error
+            return false;
         }
     };
 };
