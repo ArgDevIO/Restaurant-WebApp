@@ -50,7 +50,7 @@ Developed & designed by:
 	- [Redux](https://redux.js.org/)
 	- [Styled-Components](https://styled-components.com/)
 	- [Formik](https://jaredpalmer.com/formik/)
-	- [TypeScript](https://www.typescriptlang.org/index.html)
+	- [TypeScript](https://www.typescriptlang.org/index.html) - soon
 	
 - **DevOps**:
 	- [Docker](https://www.docker.com/) 
