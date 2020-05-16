@@ -26,9 +26,9 @@ public class Address {
     private String name;
     @NotBlank(message = "Street address is required")
     private String street;
-    private int number;
-    private int entry;
-    private int apartment;
+    private String number;
+    private String entry;
+    private String apartment;
     private String interphoneCode;
     private String city;
     private String village;
@@ -71,12 +71,13 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (getNumber() != address.getNumber()) return false;
-        if (getEntry() != address.getEntry()) return false;
-        if (getApartment() != address.getApartment()) return false;
         if (getId() != null ? !getId().equals(address.getId()) : address.getId() != null) return false;
         if (getName() != null ? !getName().equals(address.getName()) : address.getName() != null) return false;
         if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
+        if (getNumber() != null ? !getNumber().equals(address.getNumber()) : address.getNumber() != null) return false;
+        if (getEntry() != null ? !getEntry().equals(address.getEntry()) : address.getEntry() != null) return false;
+        if (getApartment() != null ? !getApartment().equals(address.getApartment()) : address.getApartment() != null)
+            return false;
         if (getInterphoneCode() != null ? !getInterphoneCode().equals(address.getInterphoneCode()) : address.getInterphoneCode() != null)
             return false;
         if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
@@ -84,7 +85,10 @@ public class Address {
             return false;
         if (getCoordinates() != null ? !getCoordinates().equals(address.getCoordinates()) : address.getCoordinates() != null)
             return false;
-        return getUser() != null ? getUser().equals(address.getUser()) : address.getUser() == null;
+        if (getUser() != null ? !getUser().equals(address.getUser()) : address.getUser() != null) return false;
+        if (getCreated_At() != null ? !getCreated_At().equals(address.getCreated_At()) : address.getCreated_At() != null)
+            return false;
+        return getUpdated_At() != null ? getUpdated_At().equals(address.getUpdated_At()) : address.getUpdated_At() == null;
     }
 
     @Override
@@ -92,14 +96,16 @@ public class Address {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
-        result = 31 * result + getNumber();
-        result = 31 * result + getEntry();
-        result = 31 * result + getApartment();
+        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
+        result = 31 * result + (getEntry() != null ? getEntry().hashCode() : 0);
+        result = 31 * result + (getApartment() != null ? getApartment().hashCode() : 0);
         result = 31 * result + (getInterphoneCode() != null ? getInterphoneCode().hashCode() : 0);
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
         result = 31 * result + (getVillage() != null ? getVillage().hashCode() : 0);
         result = 31 * result + (getCoordinates() != null ? getCoordinates().hashCode() : 0);
         result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
+        result = 31 * result + (getCreated_At() != null ? getCreated_At().hashCode() : 0);
+        result = 31 * result + (getUpdated_At() != null ? getUpdated_At().hashCode() : 0);
         return result;
     }
 }

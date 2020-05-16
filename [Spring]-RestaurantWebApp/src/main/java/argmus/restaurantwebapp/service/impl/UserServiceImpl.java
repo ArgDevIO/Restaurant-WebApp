@@ -2,6 +2,7 @@ package argmus.restaurantwebapp.service.impl;
 
 import argmus.restaurantwebapp.exception.UserDoesntExistException;
 import argmus.restaurantwebapp.exception.UserEmailAlreadyExistsException;
+import argmus.restaurantwebapp.exception.UserPhoneAlreadyExistsException;
 import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.OTP;
 import argmus.restaurantwebapp.model.Role;
@@ -48,6 +49,9 @@ public class UserServiceImpl implements UserService {
         if (this.userRepository.existsUserByEmail(newUser.getEmail()))
             throw new UserEmailAlreadyExistsException("User email '" + newUser.getEmail() + "' already exists");
 
+        if (this.userRepository.existsUserByPhone(newUser.getPhone()))
+            throw new UserPhoneAlreadyExistsException("User phone '" + newUser.getPhone() + "' already exists");
+
         // Encode password
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
         // Get primary address from newUser
@@ -67,6 +71,10 @@ public class UserServiceImpl implements UserService {
             primaryAddress.setUser(savedUser);
             this.addressRepository.save(primaryAddress);
         }
+
+        savedUser.setConfirmPassword(null);
+        savedUser.setPassword(null);
+        savedUser.setRoles(null);
 
         return savedUser;
     }
