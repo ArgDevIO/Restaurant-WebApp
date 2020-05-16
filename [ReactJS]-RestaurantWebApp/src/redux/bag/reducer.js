@@ -5,7 +5,7 @@ import {
     DECREASE_PRODUCT_QUANTITY,
 } from './actions';
 
-const initialState = {
+export const initialState = {
     bagProducts: [],
 };
 

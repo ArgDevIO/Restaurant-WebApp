@@ -1,13 +1,7 @@
-import {
-    FETCH_DATA_ERROR,
-    FETCH_DATA_PRELOAD,
-    FETCH_DATA_SUCCESS,
-    LOG_OUT_USER,
-    LOGIN_USER,
-} from './actions';
+import { FETCH_DATA_ERROR, FETCH_DATA_PRELOAD, FETCH_DATA_SUCCESS } from './actions';
 import jwt from 'jwt-decode';
 
-const initialState = {
+export const initialState = {
     preload: false,
     user: '',
     token: [],
@@ -34,15 +28,6 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 preload: false,
-            };
-        case LOGIN_USER:
-            return {
-                ...state,
-                isLoggedIn: true,
-            };
-        case LOG_OUT_USER:
-            return {
-                ...state,
             };
         default:
             return state;
