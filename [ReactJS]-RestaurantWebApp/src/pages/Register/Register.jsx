@@ -25,6 +25,7 @@ import {
     FaBuilding,
     FaMapMarkedAlt,
 } from 'react-icons/fa';
+import { createBrowserHistory } from 'history';
 
 const registerInitialValues = {
     fullName: '',
@@ -47,7 +48,10 @@ const RegisterHeader = styled.h2`
     color: ${colors.white};
 `;
 
-const handleRegister = (props) => {
+const handleRegister = (props, history) => {
+    
+    console.log('HISTORY');
+    console.log(history);
     const url = 'http://localhost:8080/api/users/register';
     const {
         fullName,
@@ -85,17 +89,18 @@ const handleRegister = (props) => {
     };
     try {
         axios.post(url, postObject);
+        history.push('/menu');
     } catch (e) {
         console.log(e);
     }
 };
 
-const Register = () => (
+const Register = ({ history }) => (
     <RegisterOrLoginContainer>
         <Formik
             initialValues={registerInitialValues}
             validationSchema={registerValidationSchema}
-            onSubmit={(props) => handleRegister(props)}
+            onSubmit={(props) => handleRegister(props, history)}
         >
             <RegisterOrLoginFormContainer>
                 <Form>
