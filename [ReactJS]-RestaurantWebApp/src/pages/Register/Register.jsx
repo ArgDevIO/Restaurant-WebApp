@@ -83,7 +83,11 @@ const handleRegister = (props) => {
             },
         ],
     };
-    axios.post(url, postObject);
+    try {
+        axios.post(url, postObject);
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 const Register = () => (
