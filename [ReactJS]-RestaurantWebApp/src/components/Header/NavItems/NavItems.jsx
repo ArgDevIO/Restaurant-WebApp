@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import colors from '../../../theme/colors';
 import Tooltip from '../../Tooltip/Tooltip';
+import { logOutUser } from '../../../redux/auth/actions';
+import { connect } from 'react-redux';
 
 const active = 'active';
 
@@ -22,12 +24,12 @@ const itemOnClickHandler = (e, item) => {
     if (item.disabled) e.preventDefault();
 };
 
-const NavItems = ({ items }) =>
+const NavItems = ({ items, logOut }) =>
     items.map((item) => {
         return item.disabled ? (
             <Tooltip
                 placement="bottom"
-                content={<button>Log out</button>}
+                content={<button onClick={() => logOut()}>Log out</button>}
                 fontSize="15"
                 arrowWidth={0}
             >
@@ -46,4 +48,8 @@ const NavItems = ({ items }) =>
         );
     });
 
-export default NavItems;
+const mapDispatchToProps = (dispatch) => ({
+    logOut: () => dispatch(logOutUser()),
+});
+
+export default connect(null, mapDispatchToProps)(NavItems);
