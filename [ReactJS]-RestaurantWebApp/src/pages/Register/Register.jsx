@@ -47,8 +47,11 @@ const RegisterHeader = styled.h2`
     color: ${colors.white};
 `;
 
-const handleRegister = (props) => {
+const handleRegister = ({ history }) => {
+    console.log('history: ');
+    console.log(history);
     const url = 'http://localhost:8080/api/users/register';
+    // todo: destructure props
     const postObject = {
         fullName: props.fullName,
         email: props.email,
@@ -68,15 +71,20 @@ const handleRegister = (props) => {
             },
         ],
     };
-    axios.post(url, postObject);
+
+    try {
+        axios.post(url, postObject);
+    } catch (e) {
+        console.log(e);
+    }
 };
 
-const Register = () => (
+const Register = ({ history }) => (
     <RegisterOrLoginContainer>
         <Formik
             initialValues={registerInitialValues}
             validationSchema={registerValidationSchema}
-            onSubmit={(props) => handleRegister(props)}
+            onSubmit={(props) => handleRegister(props, history)}
         >
             <RegisterOrLoginFormContainer>
                 <Form>
