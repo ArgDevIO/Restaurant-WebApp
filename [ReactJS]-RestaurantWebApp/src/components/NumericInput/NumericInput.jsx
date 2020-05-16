@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../theme/colors';
 import { useState } from 'react';
-import {
-    increaseProductQuantity,
-    decreaseProductQuantity,
-} from '../../redux/bag/actions';
+import { increaseProductQuantity, decreaseProductQuantity } from '../../redux/bag/actions';
 import { connect } from 'react-redux';
 
 const NumericContainer = styled.div`
@@ -109,10 +106,8 @@ const NumericInput = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    increaseProductQuantity: (product) =>
-        dispatch(increaseProductQuantity(product)),
-    decreaseProductQuantity: (product) =>
-        dispatch(decreaseProductQuantity(product)),
+    increaseProductQuantity: (product) => dispatch(increaseProductQuantity(product)),
+    decreaseProductQuantity: (product) => dispatch(decreaseProductQuantity(product)),
 });
 
 export default connect(null, mapDispatchToProps)(NumericInput);
