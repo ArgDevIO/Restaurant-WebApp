@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
+    "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
     "polished": "^3.5.2",
     "query-string": "^6.11.1",
