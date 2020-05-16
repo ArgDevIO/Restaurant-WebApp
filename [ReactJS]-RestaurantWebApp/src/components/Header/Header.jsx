@@ -36,16 +36,16 @@ const NavLinksWrapper = styled.div`
 `;
 
 const Header = ({ user }) => {
-    const languages = [
-        { language: 'AL' },
-        { language: 'MK' },
-        { language: 'EN' },
-    ];
+    const languages = [{ language: 'AL' }, { language: 'MK' }, { language: 'EN' }];
 
     const navLinks = [
         { navLink: 'Menu', to: '/menu' },
         { navLink: 'Contact', to: '/contact' },
-        { navLink: user.fullName || 'Log In', to: '/login' },
+        {
+            navLink: user.fullName || 'Log In',
+            to: '/login',
+            disabled: user.fullName ? true : false,
+        },
     ];
 
     return (
