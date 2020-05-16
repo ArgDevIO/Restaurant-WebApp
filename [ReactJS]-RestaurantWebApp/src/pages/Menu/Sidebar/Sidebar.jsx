@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import uuid from 'uuid/dist/v4';
 import { ArrowUp, ArrowDown } from '../Arrows/Arrows';
 import SidebarItem from './SidebarItem';
-import { getActiveCategory } from '../../../../redux/products/reducer';
-import { setActiveCategory } from '../../../../redux/products/actions';
+import { getActiveCategory } from '../../../redux/products/reducer';
+import { setActiveCategory } from '../../../redux/products/actions';
 import { connect } from 'react-redux';
-import { getCategories } from '../../../../redux/categories/reducer';
+import { getCategories } from '../../../redux/categories/reducer';
 
 // const categories = [
 //     { category: 'Breakfast' },

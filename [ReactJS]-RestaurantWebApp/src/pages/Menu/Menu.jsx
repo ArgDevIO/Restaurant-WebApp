@@ -1,20 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import Sidebar from './Sidebar/Sidebar';
-import { LineBreak, Copyright } from '../../components/Footer/Footer';
 import Product from './Products/Product';
 import Products from './Products/Products';
 import OrderSection from './Order/OrderSection';
-import { getProducts } from '../../../redux/products/reducer';
+import { getProducts } from '../../redux/products/reducer';
 import { connect } from 'react-redux';
-import { loginToggler } from '../../../redux/auth/actions';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { getCategories } from '../../../redux/categories/reducer';
-import { fetchCategories } from '../../../redux/categories/fetchCategories';
-import { fetchProductsByCategory } from '../../../redux/products/fetchProducts';
-import { setActiveCategory } from '../../../redux/products/actions';
+import { getCategories } from '../../redux/categories/reducer';
+import { fetchCategories } from '../../redux/categories/fetchCategories';
+import { LineBreak } from '../../components/Footer/Footer';
 
 const Wrapper = styled.div`
     /* background-color: red; */

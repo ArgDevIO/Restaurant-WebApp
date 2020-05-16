@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { LineBreak } from '../../../components/Footer/Footer';
-import colors from '../../../../theme/colors';
+import colors from '../../../theme/colors';
 import { BsHeart } from 'react-icons/bs';
 import { FaShoppingBag } from 'react-icons/fa';
-import { addProductToBag } from '../../../../redux/bag/actions';
+import { addProductToBag } from '../../../redux/bag/actions';
 import { connect } from 'react-redux';
 import { getIsLoggedIn } from '../../../redux/auth/reducer';
 import { useHistory } from 'react-router';
 import Button from '../../../components/Button/Button';
+import { LineBreak } from '../../../components/Footer/Footer';
 
 const StyledProduct = styled.div`
     color: ${colors.white};
@@ -101,11 +101,7 @@ const Product = ({ product, addProductToBag, disabledButton, isLoggedIn }) => {
                 {/* <NumericInput value={0} min={0} max={5} /> */}
             </ServingWrapper>
             <AddToBagAndFavWrapper>
-                <Button
-                    disabled={disabledButton}
-                    fullWidth
-                    onClick={() => handleAddToBag(product)}
-                >
+                <Button disabled={disabledButton} fullWidth onClick={() => handleAddToBag(product)}>
                     <div>
                         <FaShoppingBag size={18} /> Add to bag
                     </div>

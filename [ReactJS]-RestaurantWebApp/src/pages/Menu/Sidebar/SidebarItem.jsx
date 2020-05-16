@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import ActiveCategoryLogo from '../../../assets/images/breakfast_icon.svg';
 import CategoryLogo from '../../../assets/images/breakfast-icon-png.png';
-import colors from '../../../../theme/colors';
-import { fetchDynamicProducts } from '../../../../redux/products/actions';
+import colors from '../../../theme/colors';
 import { connect } from 'react-redux';
-import { fetchProductsByCategory } from '../../../../redux/products/fetchProducts';
+import { fetchProductsByCategory } from '../../../redux/products/fetchProducts';
 
 const SidebarLogo = styled.img`
     height: 60px;

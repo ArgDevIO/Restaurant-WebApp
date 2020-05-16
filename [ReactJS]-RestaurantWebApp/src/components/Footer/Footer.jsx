@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import colors from '../../theme/colors';
-import { GardenColorSpan } from '../pages/Contact/Contact';
+import { GardenColorSpan } from '../../pages/Contact/Contact';
 import { FaHeart } from 'react-icons/fa';
 
 export const LineBreak = styled.div`

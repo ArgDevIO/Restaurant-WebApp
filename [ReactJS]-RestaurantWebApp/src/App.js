@@ -2,15 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
-import HomePage from './components/pages/Home/HomePage';
-import Menu from './components/pages/Menu/Menu';
+import HomePage from './pages/Home/HomePage';
+import Menu from './pages/Menu/Menu';
 import Footer from './components/Footer/Footer';
-import Contact from './components/pages/Contact/Contact';
+import Contact from './pages/Contact/Contact';
 import ProtectedRoute from './routes/ProtectedRoute';
 import { getIsLoggedIn } from './redux/auth/reducer';
 import { connect } from 'react-redux';
-import LogIn from './components/pages/LogIn/LogIn';
-import Register from './components/pages/Register/Register';
+import LogIn from './pages/LogIn/LogIn';
+import Register from './pages/Register/Register';
 
 const AppWrapper = styled.div`
     width: 80%;

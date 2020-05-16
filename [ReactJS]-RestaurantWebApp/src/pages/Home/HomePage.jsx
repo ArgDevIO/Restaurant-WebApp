@@ -2,10 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 // assets
-import MainLogo from '../../../assets/images/GARDEN Restaurant - No Background-01.png';
-import colors from '../../../theme/colors';
+import MainLogo from '../../assets/images/GARDEN Restaurant - No Background-01.png';
+import colors from '../../theme/colors';
 import SocialMedia from '../../components/SocialMedia/SocialMedia';
-import { LineBreak, Copyright } from '../../pages/Home/HomePage.jsx';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`

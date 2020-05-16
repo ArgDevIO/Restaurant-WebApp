@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { FaMapMarkerAlt, FaFacebook, FaInstagram } from 'react-icons/fa';
 import { IoMdClock } from 'react-icons/io';
-import ManagerLogo from '../../../assets/images/manager.png';
+import ManagerLogo from '../../assets/images/manager.png';
 import colors from '../../theme/colors';
 import { LineBreak } from '../../components/Footer/Footer';
 
