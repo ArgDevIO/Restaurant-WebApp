@@ -49,22 +49,37 @@ const RegisterHeader = styled.h2`
 
 const handleRegister = (props) => {
     const url = 'http://localhost:8080/api/users/register';
+    const {
+        fullName,
+        email,
+        password,
+        confirmPassword,
+        phone,
+        name,
+        street,
+        number,
+        entry,
+        appartment,
+        interphoneCode,
+        city,
+        village,
+    } = props;
     const postObject = {
-        fullName: props.fullName,
-        email: props.email,
-        password: props.password,
-        confirmPassword: props.confirmPassword,
-        phone: props.phone,
+        fullName,
+        email,
+        password,
+        confirmPassword,
+        phone,
         addresses: [
             {
-                name: props.name,
-                street: props.street,
-                number: props.number,
-                entry: props.entry,
-                appartment: props.appartment,
-                interphoneCode: props.interphoneCode,
-                city: props.city,
-                village: props.village,
+                name,
+                street,
+                number,
+                entry,
+                appartment,
+                interphoneCode,
+                city,
+                village,
             },
         ],
     };
