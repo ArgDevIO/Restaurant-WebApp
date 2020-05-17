@@ -116,9 +116,9 @@ public class UserServiceImpl implements UserService {
     public Object sendCode(String phone) {
         // Check if current phone has already requested a code, if yes, delete it and send a new one
         // This enables this same method also for resending a code
-        OTP otp = this.otpRepository.findOTPByPhone(phone);
-        if (otp != null)
-            this.otpRepository.delete(otp);
+        OTP existingOTP = this.otpRepository.findOTPByPhone(phone);
+        if (existingOTP != null)
+            this.otpRepository.delete(existingOTP);
 
         String ACCOUNT_SID = "AC4d96225dbb8ef4ebcc7e384bf0e4c9c8";
         String AUTH_TOKEN = "6794028751aea00e942017ba577fee12";
@@ -129,9 +129,11 @@ public class UserServiceImpl implements UserService {
         int otp_code = randomOTP();
         String text = "--GardenWebApp--\nYour verification code is: ";
 
+        OTP newOTP = new OTP(phone, otp_code);
+
         try {
             // Temp save phone/code to db
-            this.otpRepository.save(new OTP(phone, otp_code));
+            this.otpRepository.save(newOTP);
 
             Message.creator(
                     new PhoneNumber("+389" + phone.substring(1)),
@@ -140,6 +142,7 @@ public class UserServiceImpl implements UserService {
                     .create();
         } catch (Exception e) {
             returnObj.put("message", e.getMessage().contains("'To'") ? e.getMessage().replace("'To'", "") : e.getMessage());
+            this.otpRepository.delete(newOTP);
             return returnObj;
         }
 
