@@ -18,21 +18,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUserDoesntExist(UserDoesntExistException ex) {
+    public final ResponseEntity<?> handleUserDoesntExist(UserDoesntExistException ex) {
         UserDoesntExistResponse exceptionResponse = new UserDoesntExistResponse(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUserEmailAlreadyExists(UserEmailAlreadyExistsException ex) {
+    public final ResponseEntity<?> handleUserEmailAlreadyExists(UserEmailAlreadyExistsException ex) {
         UserEmailAlreadyExistsResponse exceptionResponse = new UserEmailAlreadyExistsResponse(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public final ResponseEntity<Object> handleUserPhoneAlreadyExists(UserPhoneAlreadyExistsException ex) {
+    public final ResponseEntity<?> handleUserPhoneAlreadyExists(UserPhoneAlreadyExistsException ex) {
         UserPhoneAlreadyExistsResponse exceptionResponse = new UserPhoneAlreadyExistsResponse(ex.getMessage());
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
 }
