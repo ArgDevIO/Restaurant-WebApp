@@ -1,6 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getIsLoggedIn, getPreload } from '../../redux/auth/reducer';
+import {
+    getIsLoggedIn,
+    getPreload,
+    getErrorNotification,
+    getErrorMessage,
+} from '../../redux/auth/reducer';
 import { loginToggler } from '../../redux/auth/actions';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
@@ -17,6 +22,8 @@ import { logInValidationSchema } from '../../formik/LoginValidation';
 import { Formik, Form } from 'formik';
 import FormikTextInput from '../../formik/FormikTextInput';
 import { Link } from 'react-router-dom';
+import Notification from '../../components/Notification/Notification';
+import Loader from '../../components/Loader/Loader';
 
 export const RegisterOrLoginContainer = styled.div`
     display: grid;
@@ -89,9 +96,6 @@ const LogIn = (props) => {
         // }
         // history.push('/menu');
     };
-
-    if (props.loading) return <p>Loading</p>;
-
     const handleSubmit = (email, password) => {
         props.loginUser(email, password).then((response) => {
             if (response) {
@@ -103,6 +107,13 @@ const LogIn = (props) => {
             }
         });
     };
+
+    if (props.loading)
+        return (
+            <RegisterOrLoginContainer>
+                <Loader />
+            </RegisterOrLoginContainer>
+        );
 
     return (
         <RegisterOrLoginContainer>
@@ -158,6 +169,13 @@ const LogIn = (props) => {
                     </Form>
                 </RegisterOrLoginFormContainer>
             </Formik>
+            {props.errorNotification &&
+                Notification.create({
+                    title: props.errorMessage.title,
+                    variant: 'danger',
+                    content: `${props.errorMessage.content.username}/Password`,
+                    duration: 3,
+                })}
         </RegisterOrLoginContainer>
     );
 };
@@ -165,6 +183,8 @@ const LogIn = (props) => {
 const mapStateToProps = (state) => ({
     isLoggedIn: getIsLoggedIn(state),
     loading: getPreload(state),
+    errorNotification: getErrorNotification(state),
+    errorMessage: getErrorMessage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
