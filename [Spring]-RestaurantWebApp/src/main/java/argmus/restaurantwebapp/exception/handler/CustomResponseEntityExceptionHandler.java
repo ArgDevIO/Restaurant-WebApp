@@ -20,19 +20,19 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     @ExceptionHandler
     public final ResponseEntity<Object> handleUserDoesntExist(UserDoesntExistException ex) {
         UserDoesntExistResponse exceptionResponse = new UserDoesntExistResponse(ex.getMessage());
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleUserEmailAlreadyExists(UserEmailAlreadyExistsException ex) {
         UserEmailAlreadyExistsResponse exceptionResponse = new UserEmailAlreadyExistsResponse(ex.getMessage());
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
     public final ResponseEntity<Object> handleUserPhoneAlreadyExists(UserPhoneAlreadyExistsException ex) {
         UserPhoneAlreadyExistsResponse exceptionResponse = new UserPhoneAlreadyExistsResponse(ex.getMessage());
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
