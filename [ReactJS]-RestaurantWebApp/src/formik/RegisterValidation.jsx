@@ -1,4 +1,4 @@
-import { object, string, ref, number } from 'yup';
+import { object, string, ref } from 'yup';
 
 const phoneNumberPattern = /^(07[012578]\d{6}$)/;
 // atleast 8 characters and one digit
