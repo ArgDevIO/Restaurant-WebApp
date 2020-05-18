@@ -5,6 +5,8 @@ import {
     getPreload,
     getErrorNotification,
     getErrorMessage,
+    getDisplayNotification,
+    notificationMessage,
 } from '../../redux/auth/reducer';
 import { loginToggler } from '../../redux/auth/actions';
 import styled from 'styled-components';
@@ -169,13 +171,6 @@ const LogIn = (props) => {
                     </Form>
                 </RegisterOrLoginFormContainer>
             </Formik>
-            {props.errorNotification &&
-                Notification.create({
-                    title: props.errorMessage.title,
-                    variant: 'danger',
-                    content: `${props.errorMessage.content.username}/Password`,
-                    duration: 3,
-                })}
         </RegisterOrLoginContainer>
     );
 };
@@ -183,8 +178,6 @@ const LogIn = (props) => {
 const mapStateToProps = (state) => ({
     isLoggedIn: getIsLoggedIn(state),
     loading: getPreload(state),
-    errorNotification: getErrorNotification(state),
-    errorMessage: getErrorMessage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
