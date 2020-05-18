@@ -18,11 +18,20 @@ export const fetchAuthUserData = (email, password) => {
             let response = await axios.post(url, loginUserCredentials);
             const data = response.data;
             dispatch(fetchDataSuccess(data));
+            dispatch(
+                notifRequested({
+                    title: 'SUCCESS',
+                    type: 'success',
+                    content: {
+                        data: 'User logged in successfully',
+                    },
+                })
+            );
             // token here
             localStorage.setItem('token', data.token);
             return response;
         } catch (e) {
-            console.log(e.response.data)
+            console.log(e.response.data);
             dispatch(
                 notifRequested({
                     title: 'ERROR',
