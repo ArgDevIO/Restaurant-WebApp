@@ -18,14 +18,15 @@ import {
 import { LineBreak } from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 import {
-    FaPhone,
     FaAddressBook,
     FaStreetView,
     FaDoorOpen,
     FaBuilding,
     FaMapMarkedAlt,
 } from 'react-icons/fa';
-import { createBrowserHistory } from 'history';
+import { registerAttempt } from '../../redux/auth/registerUser';
+import { connect } from 'react-redux';
+import { getDisplayNotification, notificationMessage } from '../../redux/auth/reducer';
 
 const registerInitialValues = {
     fullName: '',
@@ -48,59 +49,12 @@ const RegisterHeader = styled.h2`
     color: ${colors.white};
 `;
 
-const handleRegister = (props, history) => {
-    
-    console.log('HISTORY');
-    console.log(history);
-    const url = 'http://localhost:8080/api/users/register';
-    const {
-        fullName,
-        email,
-        password,
-        confirmPassword,
-        phone,
-        name,
-        street,
-        number,
-        entry,
-        appartment,
-        interphoneCode,
-        city,
-        village,
-    } = props;
-    const postObject = {
-        fullName,
-        email,
-        password,
-        confirmPassword,
-        phone,
-        addresses: [
-            {
-                name,
-                street,
-                number,
-                entry,
-                appartment,
-                interphoneCode,
-                city,
-                village,
-            },
-        ],
-    };
-    try {
-        axios.post(url, postObject);
-        history.push('/menu');
-    } catch (e) {
-        console.log(e);
-    }
-};
-
-const Register = ({ history }) => (
+const Register = ({ history, registerUser }) => (
     <RegisterOrLoginContainer>
         <Formik
             initialValues={registerInitialValues}
             validationSchema={registerValidationSchema}
-            onSubmit={(props) => handleRegister(props, history)}
+            onSubmit={(props) => registerUser(props, history)}
         >
             <RegisterOrLoginFormContainer>
                 <Form>
@@ -211,4 +165,8 @@ const Register = ({ history }) => (
     </RegisterOrLoginContainer>
 );
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+    registerUser: (props, history) => dispatch(registerAttempt(props, history)),
+});
+
+export default connect(null, mapDispatchToProps)(Register);
