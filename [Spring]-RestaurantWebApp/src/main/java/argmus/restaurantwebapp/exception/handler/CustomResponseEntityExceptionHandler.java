@@ -1,9 +1,9 @@
 package argmus.restaurantwebapp.exception.handler;
 
-import argmus.restaurantwebapp.exception.UserDoesntExistException;
-import argmus.restaurantwebapp.exception.UserEmailAlreadyExistsException;
-import argmus.restaurantwebapp.exception.UserPhoneAlreadyExistsException;
+import argmus.restaurantwebapp.exception.UserException;
+import argmus.restaurantwebapp.exception.response.UserExceptionResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,19 +16,8 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public final String handleUserDoesntExist(UserDoesntExistException ex) {
-        return ex.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public final String handleUserEmailAlreadyExists(UserEmailAlreadyExistsException ex) {
-        return ex.getMessage();
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public final String handleUserPhoneAlreadyExists(UserPhoneAlreadyExistsException ex) {
-        return ex.getMessage();
+    public final ResponseEntity<?> handleUserException(UserException ex) {
+        UserExceptionResponse exceptionResponse = new UserExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }

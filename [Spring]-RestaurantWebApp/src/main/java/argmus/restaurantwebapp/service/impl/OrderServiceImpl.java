@@ -2,7 +2,7 @@ package argmus.restaurantwebapp.service.impl;
 
 import argmus.restaurantwebapp.exception.AddressNotFoundOnUserException;
 import argmus.restaurantwebapp.exception.MenuProductDoesntExistException;
-import argmus.restaurantwebapp.exception.UserDoesntExistException;
+import argmus.restaurantwebapp.exception.UserException;
 import argmus.restaurantwebapp.model.*;
 import argmus.restaurantwebapp.repository.*;
 import argmus.restaurantwebapp.security.JwtTokenProvider;
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
         Order newOrder = new Order();
         List<OrderProduct> orderProducts = new ArrayList<>();
 
-        User user = this.userRepository.findById(jsonOrder.get("user_id").getAsLong()).orElseThrow(() -> new UserDoesntExistException("User doesn't exist"));
+        User user = this.userRepository.findById(jsonOrder.get("user_id").getAsLong()).orElseThrow(() -> new UserException("User id " + jsonOrder.get("user_id") + " doesn't exist"));
         newOrder.setUser(user);
 
         Address address = this.addressRepository.findById(jsonOrder.get("address_id").getAsLong()).orElseThrow(AddressNotFoundOnUserException::new);

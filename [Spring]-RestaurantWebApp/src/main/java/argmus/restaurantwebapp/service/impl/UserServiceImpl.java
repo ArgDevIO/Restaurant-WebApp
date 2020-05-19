@@ -1,8 +1,6 @@
 package argmus.restaurantwebapp.service.impl;
 
-import argmus.restaurantwebapp.exception.UserDoesntExistException;
-import argmus.restaurantwebapp.exception.UserEmailAlreadyExistsException;
-import argmus.restaurantwebapp.exception.UserPhoneAlreadyExistsException;
+import argmus.restaurantwebapp.exception.UserException;
 import argmus.restaurantwebapp.model.Address;
 import argmus.restaurantwebapp.model.OTP;
 import argmus.restaurantwebapp.model.Role;
@@ -47,10 +45,10 @@ public class UserServiceImpl implements UserService {
     public User registerUser(User newUser, String role) {
         // Email has to be unique
         if (this.userRepository.existsUserByEmail(newUser.getEmail()))
-            throw new UserEmailAlreadyExistsException("User email '" + newUser.getEmail() + "' already exists");
+            throw new UserException("User email '" + newUser.getEmail() + "' already exists");
 
         if (this.userRepository.existsUserByPhone(newUser.getPhone()))
-            throw new UserPhoneAlreadyExistsException("User phone '" + newUser.getPhone() + "' already exists");
+            throw new UserException("User phone '" + newUser.getPhone() + "' already exists");
 
         // Encode password
         newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
@@ -81,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(Long userId) {
-        return this.userRepository.findById(userId).orElseThrow(() -> new UserDoesntExistException("User with ID '" + userId + "' doesn't exist"));
+        return this.userRepository.findById(userId).orElseThrow(() -> new UserException("User with ID '" + userId + "' doesn't exist"));
     }
 
     @Override
