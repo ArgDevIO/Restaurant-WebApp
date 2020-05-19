@@ -54,9 +54,11 @@ const App = ({ isLoggedIn }) => {
                         path="/login"
                         render={(props) => <LogIn authenticated={isLoggedIn} {...props} />}
                     />
-                    <Route exact path="/register">
-                        <Register />
-                    </Route>
+                    <Route
+                        exact
+                        path="/register"
+                        render={(props) => <Register {...props} />}
+                    ></Route>
                     <Route>
                         <PageNotFound />
                     </Route>

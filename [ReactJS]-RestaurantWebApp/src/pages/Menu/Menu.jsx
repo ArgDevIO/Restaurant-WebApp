@@ -12,6 +12,8 @@ import { useState } from 'react';
 import { getCategories } from '../../redux/categories/reducer';
 import { fetchCategories } from '../../redux/categories/fetchCategories';
 import { LineBreak } from '../../components/Footer/Footer';
+import { getDisplayNotification, notificationMessage } from '../../redux/auth/reducer';
+import Notification from '../../components/Notification/Notification';
 
 const Wrapper = styled.div`
     /* background-color: red; */

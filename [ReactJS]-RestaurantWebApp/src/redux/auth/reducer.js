@@ -6,6 +6,7 @@ export const initialState = {
     user: '',
     token: [],
     isLoggedIn: false,
+    registerPreload: false,
 };
 
 const authReducer = (state = initialState, action) => {

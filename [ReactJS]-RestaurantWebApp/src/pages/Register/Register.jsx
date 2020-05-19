@@ -18,13 +18,15 @@ import {
 import { LineBreak } from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 import {
-    FaPhone,
     FaAddressBook,
     FaStreetView,
     FaDoorOpen,
     FaBuilding,
     FaMapMarkedAlt,
 } from 'react-icons/fa';
+import { registerAttempt } from '../../redux/auth/registerUser';
+import { connect } from 'react-redux';
+import { getDisplayNotification, notificationMessage } from '../../redux/auth/reducer';
 
 const registerInitialValues = {
     fullName: '',
@@ -47,36 +49,12 @@ const RegisterHeader = styled.h2`
     color: ${colors.white};
 `;
 
-const handleRegister = (props) => {
-    const url = 'http://localhost:8080/api/users/register';
-    const postObject = {
-        fullName: props.fullName,
-        email: props.email,
-        password: props.password,
-        confirmPassword: props.confirmPassword,
-        phone: props.phone,
-        addresses: [
-            {
-                name: props.name,
-                street: props.street,
-                number: props.number,
-                entry: props.entry,
-                appartment: props.appartment,
-                interphoneCode: props.interphoneCode,
-                city: props.city,
-                village: props.village,
-            },
-        ],
-    };
-    axios.post(url, postObject);
-};
-
-const Register = () => (
+const Register = ({ history, registerUser }) => (
     <RegisterOrLoginContainer>
         <Formik
             initialValues={registerInitialValues}
             validationSchema={registerValidationSchema}
-            onSubmit={(props) => handleRegister(props)}
+            onSubmit={(props) => registerUser(props, history)}
         >
             <RegisterOrLoginFormContainer>
                 <Form>
@@ -187,4 +165,8 @@ const Register = () => (
     </RegisterOrLoginContainer>
 );
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+    registerUser: (props, history) => dispatch(registerAttempt(props, history)),
+});
+
+export default connect(null, mapDispatchToProps)(Register);
