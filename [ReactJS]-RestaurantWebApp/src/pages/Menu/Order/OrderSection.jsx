@@ -6,9 +6,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { getBagProducts } from '../../../redux/bag/reducer';
 import { connect } from 'react-redux';
 import { removeProductFromBag } from '../../../redux/bag/actions';
-import { getIsLoggedIn } from '../../../redux/auth/reducer';
+import { getIsLoggedIn, getUser } from '../../../redux/auth/reducer';
 import Button from '../../../components/Button/Button';
 import NumericInput from '../../../components/NumericInput/NumericInput';
+import axios from 'axios';
+import { handleOrder } from '../../../redux/bag/order';
 
 const StyledOrder = styled.div`
     background-color: ${(props) => props.theme.palette.main};
@@ -35,7 +37,7 @@ const OrderItem = styled.div`
 
 const OrderItemWrapper = styled.div``;
 
-const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
+const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn, userId, placeOrder }) => {
     const history = useHistory();
 
     const handleLogIn = () => {
@@ -89,6 +91,7 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
                 </Button>
             ) : (
                 <Button
+                    onClick={() => placeOrder(bagItems, userId)}
                     style={{ width: '90%', margin: `10px auto` }}
                     color={colors.backgroundColor}
                     fullWidth
@@ -105,10 +108,12 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn }) => {
 const mapStateToProps = (state) => ({
     bagItems: getBagProducts(state),
     isLoggedIn: getIsLoggedIn(state),
+    userId: getUser(state).id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     removeItemFromBag: (productIndex) => dispatch(removeProductFromBag(productIndex)),
+    placeOrder: (bagItems, userId) => dispatch(handleOrder(bagItems, userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderSection);
