@@ -43,15 +43,15 @@ export const registerAttempt = (props, history) => {
     return async (dispatch) => {
         try {
             await axios.post(url, registerPostObject);
-            dispatch(
-                notifRequested({
-                    title: 'SUCCESS',
-                    type: 'success',
-                    content: {
-                        data: 'User registered successfully',
-                    },
-                })
-            );
+            // dispatch(
+            //     notifRequested({
+            //         title: 'SUCCESS',
+            //         type: 'success',
+            //         content: {
+            //             data: 'User registered successfully',
+            //         },
+            //     })
+            // );
             dispatch(fetchAuthUserData(email, password));
             history.push('/menu');
         } catch (e) {

@@ -11,7 +11,7 @@ export default (store) => (next) => (action) => {
     Notification.create({
         variant: type,
         title,
-        content: content.data ? content.data : content,
+        content: content.data,
         duration: 3,
     });
 };

@@ -13,7 +13,7 @@ const bagReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_PRODUCT_TO_BAG:
             const productToBeAdded = action.payload;
-            if (!productToBeAdded.currentQuantity) productToBeAdded.currentQuantity = 1;
+            productToBeAdded.currentQuantity = 1;
             return {
                 ...state,
                 bagProducts: [...state.bagProducts, productToBeAdded],
