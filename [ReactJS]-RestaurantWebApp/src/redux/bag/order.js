@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { notifRequested } from '../../middleware/notifications/actions';
+import { emptyCart } from './actions';
 
 const orderEndpoint = 'http://localhost:8080/api/orders/new';
 
@@ -37,21 +38,26 @@ export const handleOrder = (bagItems, userId) => {
     return async (dispatch) => {
         try {
             let response = await axios.post(orderEndpoint, orderData, {
-                Authorization: localStorage.getItem('token'),
+                headers: {
+                    Authorization: `${localStorage.getItem('token')}`,
+                },
             });
             dispatch(
                 notifRequested({
                     title: 'SUCCESS',
                     type: 'success',
-                    content: 'Order placed sucessfully',
+                    content: { data: 'Order placed sucessfully' },
                 })
             );
+            dispatch(emptyCart());
         } catch (e) {
             dispatch(
                 notifRequested({
                     title: 'ERROR',
                     type: 'danger',
-                    content: 'Order messed up',
+                    content: {
+                        data: 'Order cannot be made',
+                    },
                 })
             );
         }
