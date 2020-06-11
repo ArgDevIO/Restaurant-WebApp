@@ -36,7 +36,7 @@ export const fetchAuthUserData = (email, password) => {
                 notifRequested({
                     title: 'ERROR',
                     type: 'danger',
-                    content: e.response.data,
+                    content: e.response,
                 })
             );
             dispatch(fetchDataError());
