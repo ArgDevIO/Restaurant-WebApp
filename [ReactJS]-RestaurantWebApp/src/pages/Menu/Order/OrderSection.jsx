@@ -46,6 +46,11 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn, userId, placeOr
             state: { from: '/menu' },
         });
     };
+    let totalPriceAll = bagItems
+        .map((bagItem) => {
+            return bagItem.totalPrice;
+        })
+        .reduce((acc, current) => acc + current, 0);
 
     return (
         <StyledOrder>
@@ -80,6 +85,7 @@ const OrderSection = ({ bagItems, removeItemFromBag, isLoggedIn, userId, placeOr
                 );
             })}
             {/* <Link to="/login"> */}
+            {totalPriceAll > 0 ? `Total: ${totalPriceAll}` : ''}
             {!isLoggedIn ? (
                 <Button
                     style={{ width: '90%', margin: `10px auto` }}
