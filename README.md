@@ -62,8 +62,8 @@ Developed & designed by:
 ## Prerequisites to run this app
 - Java 11>
 - Docker
-- mvn or IDE
-- Yarn
+- Node
+- npm or yarn
 
 ## Steps to Setup the Spring Boot Back end app ([Spring]-RestaurantWebApp)
 
