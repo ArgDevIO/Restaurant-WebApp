@@ -16,7 +16,7 @@ INSERT INTO `restaurant-web-app_db`.menu_products (id, active, description, name
 VALUES
 (1, 1, '2 Eggs, Chicken Ham, Mushrooms, Olives', 'English Breakfast', 150, 1),
 (2, 1, 'Test, Test, Test', 'Test1', 120, 1),
-(3, 1, '2 Eggs, Chicken Ham, Mushrooms, Olives', 'English Breakfast', 150, 1),
+(3, 1, '2 Eggs, Olives', 'Omlette', 130, 1),
 (4, 1, 'Test, Test, Test', 'Test2', 120, 1),
 (5, 1, 'Test, Test, Test', 'Test3', 150, 2),
 (6, 1, 'Test, Test, Test', 'Test4', 120, 2),
