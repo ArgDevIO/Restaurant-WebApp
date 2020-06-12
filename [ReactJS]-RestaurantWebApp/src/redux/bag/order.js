@@ -46,7 +46,11 @@ export const handleOrder = (bagItems, userId) => {
                 notifRequested({
                     title: 'SUCCESS',
                     type: 'success',
-                    content: { data: 'Order placed sucessfully' },
+                    content: {
+                        data: {
+                            message: 'Order placed sucessfully',
+                        },
+                    },
                 })
             );
             dispatch(emptyCart());
@@ -56,7 +60,9 @@ export const handleOrder = (bagItems, userId) => {
                     title: 'ERROR',
                     type: 'danger',
                     content: {
-                        data: 'Order cannot be made',
+                        data: {
+                            message: 'Order cannot be made',
+                        },
                     },
                 })
             );

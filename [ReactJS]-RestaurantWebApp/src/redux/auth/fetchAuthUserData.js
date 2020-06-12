@@ -23,7 +23,9 @@ export const fetchAuthUserData = (email, password) => {
                     title: 'SUCCESS',
                     type: 'success',
                     content: {
-                        data: 'User logged in successfully',
+                        data: {
+                            message: 'User logged in successfully',
+                        },
                     },
                 })
             );
