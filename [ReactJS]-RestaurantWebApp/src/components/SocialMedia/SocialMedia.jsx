@@ -24,7 +24,7 @@ const SocialMedia = () => (
         <SocialMediaWrapper>
             <img src={FacebookLogo} alt="Facebook" />
             {/* upload instagram logo to svg */}
-            <img src={FacebookLogo} alt="Instagram" />
+            <img src={InstagramLogo} alt="Instagram" />
         </SocialMediaWrapper>
     </SocialMediaContainer>
 );

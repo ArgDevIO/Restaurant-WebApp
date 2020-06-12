@@ -3,6 +3,7 @@ import {
     REMOVE_PRODUCT_FROM_BAG,
     INCREASE_PRODUCT_QUANTITY,
     DECREASE_PRODUCT_QUANTITY,
+    EMPTY_CART,
 } from './actions';
 
 export const initialState = {
@@ -51,6 +52,10 @@ const bagReducer = (state = initialState, action) => {
             return {
                 ...state,
                 bagProducts: updatedProductsDecrease,
+            };
+        case EMPTY_CART:
+            return {
+                ...initialState,
             };
         default: {
             return state;
