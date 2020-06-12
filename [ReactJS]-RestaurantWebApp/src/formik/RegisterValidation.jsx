@@ -15,7 +15,7 @@ export const registerValidationSchema = object({
         .required('Required'),
     phone: string().matches(phoneNumberPattern, 'Invalid phone number').required('Required'),
     name: string().required('Required'),
-    street: string(),
+    street: string().required('Required'),
     number: string(),
     entry: string().nullable(),
     appartment: string().nullable(),
